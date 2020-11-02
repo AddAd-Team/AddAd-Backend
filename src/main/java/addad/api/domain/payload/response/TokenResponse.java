@@ -1,6 +1,7 @@
 package addad.api.domain.payload.response;
 
 import addad.api.utils.JwtUtil;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
