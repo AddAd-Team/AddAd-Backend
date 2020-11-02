@@ -49,14 +49,11 @@ public class User {
       private List<Like> likes;
 
     @Builder
-    public User(String userEmail, String userPw, String userName,
-                String userDesc, String userRefreshToken, Integer userPrivate) {
+    public User(String userEmail, String userPw, String userName, String hashtag) {
         this.email = userEmail;
         this.password = userPw;
         this.name = userName;
-        this.description = userDesc;
-        this.refreshToken = userRefreshToken;
-        this.userPrivate = userPrivate;
+        this.hashtag = hashtag;
     }
 
     public User changeRefrehToken(String refreshToken) {
