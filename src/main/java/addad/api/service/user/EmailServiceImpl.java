@@ -4,8 +4,10 @@ import addad.api.domain.entities.EmailVerification;
 import addad.api.domain.entities.enums.EmailVerificationStatus;
 import addad.api.domain.payload.request.VerifyCodeRequest;
 import addad.api.domain.repository.EmailVerificationRepository;
+import addad.api.domain.repository.UserRepository;
 import addad.api.exception.InvalidAuthEmailException;
 import addad.api.exception.InvalidAuthCodeException;
+import addad.api.exception.UserAlreadyExsitsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -23,11 +25,17 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
 
+    private final UserRepository userRepository;
+
     @Value("${spring.mail.username}")
     private String adminEmail;
 
     @Override
     public void sendEmail(String email) {
+        userRepository.findByEmail(email).ifPresent(user -> {
+            throw new UserAlreadyExsitsException();
+        });
+
         String code = randomCode();
         this.sendEmail(email, code);
 
