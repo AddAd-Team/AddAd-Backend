@@ -16,4 +16,6 @@ public class SignUp {
     private String name;
 
     private String tag;
+
+    private String userinfo;
 }
