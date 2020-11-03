@@ -62,4 +62,8 @@ public class User {
 
         return this;
     }
+
+    public void passwordChange(String password) {
+        this.password = password;
+    }
 }
