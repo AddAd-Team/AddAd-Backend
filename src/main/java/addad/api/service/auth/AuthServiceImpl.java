@@ -1,25 +1,27 @@
 package addad.api.service.auth;
 
+import addad.api.config.security.JwtTokenProvider;
 import addad.api.domain.entities.User;
 import addad.api.domain.payload.request.SignIn;
 import addad.api.domain.payload.response.TokenResponse;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.InvalidTokenException;
 import addad.api.exception.UserNotFoundException;
-import addad.api.utils.JwtUtil;
 import addad.api.utils.PasswordEncoder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public AuthServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final JwtTokenProvider jwtTokenProvider;
+
+    @Value("${auth.jwt.prefix}")
+    private String prefix;
 
     @Override
     public TokenResponse login(SignIn signIn) {
@@ -27,21 +29,24 @@ public class AuthServiceImpl implements AuthService {
                 .filter(data -> PasswordEncoder.checkPassword(data.getPassword(), signIn.getPassword()))
                 .orElseThrow(UserNotFoundException::new);
 
-        TokenResponse token = new TokenResponse(user.getEmail());
+        TokenResponse token = responseToken(user.getEmail());
+        user.changeRefrehToken(token.getRefreshToken());
 
-        userRepository.save(user.changeRefrehToken(token.getRefreshToken()));
         return token;
     }
 
     @Override
     public TokenResponse refreshToken(String token) {
-        String email = JwtUtil.parseToken(token);
-        User user = userRepository.findByEmailAndAndRefreshToken(email, token);
-        if(user == null || !user.getRefreshToken().equals(token)) throw new InvalidTokenException();
+        if(!jwtTokenProvider.isRefreshToken(token)) throw new InvalidTokenException();
 
-        TokenResponse newToken = new TokenResponse(email);
-        userRepository.save(user.changeRefrehToken(newToken.getRefreshToken()));
+        return responseToken(jwtTokenProvider.getUserEmail(token));
+    }
 
-        return newToken;
+    private TokenResponse responseToken(String email) {
+        return TokenResponse.builder()
+                .accessToken(jwtTokenProvider.generateAccessToken(email))
+                .refreshToken(jwtTokenProvider.generateRefreshToken(email))
+                .tokenType(prefix)
+                .build();
     }
 }
