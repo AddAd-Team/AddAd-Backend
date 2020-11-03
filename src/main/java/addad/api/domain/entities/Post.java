@@ -40,7 +40,7 @@ public class Post {
 
 
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
-    private List<Like> likes;
+    private List<Like> like;
 
 
 }

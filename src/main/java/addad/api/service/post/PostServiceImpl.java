@@ -2,9 +2,9 @@ package addad.api.service.post;
 
 import addad.api.domain.entities.Post;
 import addad.api.domain.payload.request.PostRequest;
+import addad.api.domain.payload.response.PostResponse;
 import addad.api.domain.repository.LikeRepository;
 import addad.api.domain.repository.PostRepository;
-import addad.api.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -13,17 +13,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
     private final LikeRepository likeRepository;
+    private final UserRepository userRepository;
 
 
     @SneakyThrows
     @Override
     public void write(PostRequest postRequest) {
+        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
+                .orElseThrow(UserNotFoundException::new);
 
         Post post = postRepository.save(
                 Post.builder()
-                        .userId(postRequest.getUserId())
                         .title(postRequest.getTitle())
                         .hashtag(postRequest.getHashtag())
                         .description(postRequest.getDescription())
@@ -34,5 +35,8 @@ public class PostServiceImpl implements PostService {
         );
 
     }
+
+
+
 
 }
