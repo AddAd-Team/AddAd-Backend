@@ -39,9 +39,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Userinfo userinfo;
 
-    @Column(nullable = false)
-    private Integer userPrivate;
-
     @Column()
     private LocalDateTime createdAt;
 
