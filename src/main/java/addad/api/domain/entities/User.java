@@ -1,10 +1,10 @@
 package addad.api.domain.entities;
 
+import addad.api.domain.entities.enums.Userinfo;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -33,18 +33,33 @@ public class User {
     private String hashtag;
 
     @Column()
-    private String token;
-
-    @Column()
-    private String refresh_token;
+    private String refreshToken;
 
     @Column()
     @Enumerated(EnumType.STRING)
     private Userinfo userinfo;
+
+    @Column(nullable = false)
+    private Integer userPrivate;
 
     @Column()
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
       private List<Like> likes;
+
+    @Builder
+    public User(String userEmail, String userPw, String userName, String hashtag, Userinfo userinfo) {
+        this.email = userEmail;
+        this.password = userPw;
+        this.name = userName;
+        this.hashtag = hashtag;
+        this.userinfo = userinfo;
+    }
+
+    public User changeRefrehToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+
+        return this;
+    }
 }
