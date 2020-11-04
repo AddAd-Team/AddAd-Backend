@@ -1,5 +1,6 @@
 package addad.api.controller;
 
+import addad.api.domain.payload.response.ProfileResponse;
 import addad.api.service.mypage.MypageService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -23,8 +24,8 @@ public class MypageController {
         mypageService.passwordChange(password);
     }
 
-//    @PutMapping("/profileImg")
-//    public void profileImgChange(@RequestHeader("X-Access-Token") String token, @RequestParam("file") ProfileImgChange.Request file) {
-//
-//    }
+    @GetMapping(value = "/profile")
+    public ProfileResponse profile() {
+        return mypageService.profile();
+    }
 }
