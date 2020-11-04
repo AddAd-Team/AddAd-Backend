@@ -1,9 +1,9 @@
 package addad.api.domain.payload.request;
 
 
-import addad.api.domain.entities.Image;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 
@@ -12,10 +12,10 @@ import javax.validation.constraints.NotBlank;
 public class PostRequest {
 
     @NotBlank
-    private Integer userId;
+    private String title;
 
     @NotBlank
-    private String title;
+    private MultipartFile postImg;
 
     @NotBlank
     private String description;
