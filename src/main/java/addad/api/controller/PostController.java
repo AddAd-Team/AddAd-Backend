@@ -5,6 +5,7 @@ import addad.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -17,6 +18,8 @@ public class PostController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/write")
-    public void write(@ModelAttribute @Valid PostRequest postRequest) { postService.write(postRequest); }
+    public void write(@ModelAttribute @Valid PostRequest postRequest, MultipartFile file) {
+        postService.write(postRequest, file);
+    }
 
 }
