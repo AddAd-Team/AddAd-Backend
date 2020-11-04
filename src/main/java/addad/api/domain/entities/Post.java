@@ -34,7 +34,7 @@ public class Post {
     private String description;
 
     @Column
-    private Integer price;
+    private String price;
 
     @Column
     private String postTime;
@@ -45,7 +45,7 @@ public class Post {
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
     private List<Like> like;
 
-    @Builder Post(String title, String hashtag, String postImg, String description, Integer price, String postTime, String deadline) {
+    @Builder Post(String title, String hashtag, String postImg, String description, String price, String postTime, String deadline) {
         this.title = title;
         this.hashtag = hashtag;
         this.postImg = postImg;
