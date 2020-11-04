@@ -7,9 +7,9 @@ import addad.api.domain.payload.response.TokenResponse;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.InvalidTokenException;
 import addad.api.exception.UserNotFoundException;
-import addad.api.utils.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
-
+    private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Value("${auth.jwt.prefix}")
@@ -26,7 +26,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public TokenResponse login(SignIn signIn) {
         User user = userRepository.findByEmail(signIn.getEmail())
-                .filter(data -> PasswordEncoder.checkPassword(data.getPassword(), signIn.getPassword()))
+                .filter(data -> passwordEncoder.matches(signIn.getPassword(), data.getPassword()))
                 .orElseThrow(UserNotFoundException::new);
 
         TokenResponse token = responseToken(user.getEmail());
