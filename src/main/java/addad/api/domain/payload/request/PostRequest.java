@@ -13,9 +13,9 @@ public class PostRequest {
 
     @NotBlank
     private String title;
-
-    @NotBlank
-    private MultipartFile postImg;
+//
+//    @NotBlank
+//    private MultipartFile postImg;
 
     @NotBlank
     private String description;
@@ -24,7 +24,7 @@ public class PostRequest {
     private String hashtag;
 
     @NotBlank
-    private Integer price;
+    private String price;
 
     @NotBlank
     private String postTime;
