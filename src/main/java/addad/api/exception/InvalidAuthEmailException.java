@@ -1,13 +1,14 @@
 package addad.api.exception;
 
 
+import addad.api.error.Exception.BusinessException;
+import addad.api.error.Exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidAuthEmailException extends RuntimeException {
+public class InvalidAuthEmailException extends BusinessException {
 
     public InvalidAuthEmailException() {
-        super("Invalid auth email");
+        super(ErrorCode.INVALID_AUTH_EMAIL);
     }
 }
