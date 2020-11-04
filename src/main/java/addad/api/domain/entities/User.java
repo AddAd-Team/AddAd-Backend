@@ -33,6 +33,9 @@ public class User {
     private String hashtag;
 
     @Column()
+    private String profileImg;
+
+    @Column()
     private String refreshToken;
 
     @Column()
