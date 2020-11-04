@@ -11,6 +11,7 @@ import addad.api.utils.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +25,10 @@ public class PostServiceImpl implements PostService {
 
     @SneakyThrows
     @Override
-    public void write(PostRequest postRequest) {
+    public void write(PostRequest postRequest, MultipartFile file) {
+        System.out.println(file.getSize());
 
-        String imgUrl = s3Service.upload(postRequest.getPostImg());
+        String imgUrl = s3Service.upload(file);
 
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
