@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/post")
+@RequestMapping("/api/post")
 @RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping
+    @PostMapping(value = "/write")
     public void write(@ModelAttribute @Valid PostRequest postRequest) { postService.write(postRequest); }
-
-
 
 }
