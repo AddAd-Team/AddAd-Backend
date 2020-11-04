@@ -15,7 +15,7 @@ public class User {
     @Id
     @Column()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false, unique = true, length = 30)
     private String email;
@@ -38,9 +38,6 @@ public class User {
     @Column()
     @Enumerated(EnumType.STRING)
     private Userinfo userinfo;
-
-    @Column(nullable = false)
-    private Integer userPrivate;
 
     @Column()
     private LocalDateTime createdAt;
