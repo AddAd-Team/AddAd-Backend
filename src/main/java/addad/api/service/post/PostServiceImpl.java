@@ -4,7 +4,6 @@ import addad.api.config.security.AuthenticationFacade;
 import addad.api.domain.entities.Post;
 import addad.api.domain.entities.User;
 import addad.api.domain.payload.request.PostRequest;
-import addad.api.domain.repository.LikeRepository;
 import addad.api.domain.repository.PostRepository;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.UserNotFoundException;
@@ -20,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-    private final LikeRepository likeRepository;
+//    private final LikeRepository likeRepository;
     private final UserRepository userRepository;
     private final S3Service s3Service;
     private final AuthenticationFacade authenticationFacade;
