@@ -12,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
@@ -44,6 +42,5 @@ public class PostServiceImpl implements PostService {
                         .deadline(postRequest.getDeadline())
                         .build()
         );
-
     }
 }
