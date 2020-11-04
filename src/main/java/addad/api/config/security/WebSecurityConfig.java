@@ -20,15 +20,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .formLogin().disable()
-                .sessionManagement().disable()
-                .authorizeRequests()
-                    .antMatchers("/api/user").permitAll()
-                    .antMatchers("/api/auth").permitAll()
-                    .anyRequest().authenticated()
-                .and()
-                    .apply(new JwtConfigurer(jwtTokenProvider));
+            .csrf().disable()
+            .formLogin().disable()
+            .sessionManagement().disable()
+            .authorizeRequests()
+                .antMatchers("/api/user/**").permitAll()
+                .antMatchers("/api/auth/**").permitAll()
+                .anyRequest().authenticated()
+            .and()
+                .apply(new JwtConfigurer(jwtTokenProvider));
     }
 
     @Bean
