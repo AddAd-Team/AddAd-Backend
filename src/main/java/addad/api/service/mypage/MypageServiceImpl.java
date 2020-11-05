@@ -54,11 +54,12 @@ public class MypageServiceImpl implements MypageService {
         String image = user.getProfileImg();
         if (image == null && user.getUserinfo() == Userinfo.creator) {
             image = "https://addad.s3.ap-northeast-2.amazonaws.com/userImg/creator.jpg";
-        } else if (user.getUserinfo() == Userinfo.advertiser) {
+        } else if (image == null && user.getUserinfo() == Userinfo.advertiser) {
             image = "https://addad.s3.ap-northeast-2.amazonaws.com/userImg/%E1%84%80%E1%85%AA%E1%86%BC%E1%84%80%E1%85%A9%E1%84%8C%E1%85%AE111.jpg";
         }
 
         return ProfileResponse.builder()
+                .email(authenticationFacade.getUserEmail())
                 .name(user.getName())
                 .profileImg(image)
                 .hashtag(user.getHashtag())
