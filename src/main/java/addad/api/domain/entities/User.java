@@ -1,7 +1,9 @@
 package addad.api.domain.entities;
 
 import addad.api.domain.entities.enums.Userinfo;
+import addad.api.domain.payload.request.ModifyProfile;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -59,6 +61,15 @@ public class User {
 
     public User changeRefrehToken(String refreshToken) {
         this.refreshToken = refreshToken;
+
+        return this;
+    }
+
+    public User ChangeProfile(String Image, ModifyProfile modifyProfile) {
+        this.name = modifyProfile.getName();
+        this.profileImg = Image;
+        this.hashtag = modifyProfile.getHashtag();
+        this.description = modifyProfile.getDescription();
 
         return this;
     }
