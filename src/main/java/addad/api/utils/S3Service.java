@@ -47,8 +47,8 @@ public class S3Service {
         String fileName = file.getOriginalFilename();
 
         s3Client.putObject(new PutObjectRequest(bucket, dirName + "/" + fileName, file.getInputStream(), null)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-        return s3Client.getUrl(bucket, fileName).toString();
+                .withCannedAcl(CannedAccessControlList.AuthenticatedRead));
+        return s3Client.getUrl(bucket, dirName + "/" + fileName).toString();
     }
 
     public void profileDelete(String objectName) {
