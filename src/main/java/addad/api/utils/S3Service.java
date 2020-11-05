@@ -43,19 +43,15 @@ public class S3Service {
                 .build();
     }
 
-    public String profileImgUpload(MultipartFile file) throws IOException {
+    public String Upload(MultipartFile file, String dirName) throws IOException {
         String fileName = file.getOriginalFilename();
 
-        s3Client.putObject(new PutObjectRequest(bucket+"/userImg", fileName, file.getInputStream(), null)
+        s3Client.putObject(new PutObjectRequest(bucket, dirName + "/" + fileName, file.getInputStream(), null)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(bucket, fileName).toString();
     }
 
-    private String removeNewFile(File targetFile) {
-        if (targetFile.delete()) {
-            return "파일이 삭제되었습니다.";
-        } else {
-            return "파일이 삭제되지 못했습니다.";
-        }
+    public void profileDelete(String objectName) {
+        s3Client.deleteObject(bucket, "userImg/" + objectName);
     }
 }
