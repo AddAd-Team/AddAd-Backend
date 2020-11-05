@@ -79,6 +79,7 @@ public class MypageServiceImpl implements MypageService {
         userRepository.save(user);
 
         return ProfileResponse.builder()
+                .email(authenticationFacade.getUserEmail())
                 .name(ChangedUser.getName())
                 .profileImg(ChangedUser.getEmail())
                 .hashtag(ChangedUser.getHashtag())
