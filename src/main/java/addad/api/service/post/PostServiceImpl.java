@@ -1,5 +1,6 @@
 package addad.api.service.post;
 
+import addad.api.config.security.AuthenticationFacade;
 import addad.api.domain.entities.Post;
 import addad.api.domain.entities.User;
 import addad.api.domain.payload.request.PostRequest;
@@ -25,8 +26,6 @@ public class PostServiceImpl implements PostService {
     @SneakyThrows
     @Override
     public void write(PostRequest postRequest, MultipartFile file) {
-        System.out.println(file.getSize());
-
         String imgUrl = s3Service.Upload(file, "post_img/");
 
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
