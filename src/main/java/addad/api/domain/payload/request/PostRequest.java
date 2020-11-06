@@ -12,10 +12,10 @@ import javax.validation.constraints.NotBlank;
 public class PostRequest {
 
     @NotBlank
-    private String title;
+    private MultipartFile postImg;
 
     @NotBlank
-    private MultipartFile postImg;
+    private String title;
 
     @NotBlank
     private String description;

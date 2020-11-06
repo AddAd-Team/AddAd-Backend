@@ -33,10 +33,8 @@ public class PostServiceImpl implements PostService {
 
     @SneakyThrows
     @Override
-    public void write(PostRequest postRequest, MultipartFile file) {
-        System.out.println(file.getSize());
-
-        String imgUrl = s3Service.upload(file);
+    public void write(PostRequest postRequest) {
+        String imgUrl = s3Service.upload(postRequest.getPostImg());
 
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);

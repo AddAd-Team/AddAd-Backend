@@ -10,6 +10,6 @@ import java.util.List;
 
 
 public interface PostService {
-    void write(PostRequest postRequest, MultipartFile file);
+    void write(PostRequest postRequest);
     List<FeedResponse> getFeed(Pageable pageable);
 }

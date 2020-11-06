@@ -29,8 +29,8 @@ public class PostController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/write")
-    public void write(@ModelAttribute @Valid PostRequest postRequest, @RequestParam("image") MultipartFile file) {
-        postService.write(postRequest, file);
+    public void write(PostRequest postRequest) {
+        postService.write(postRequest);
     }
 
     @GetMapping("/feed")
