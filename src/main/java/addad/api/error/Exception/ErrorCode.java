@@ -18,6 +18,7 @@ public enum ErrorCode {
     USER_NOT_LEADER(401, "User Not Leader"),
     PERMISSION_DENIED_EXCEPTION(401,"Permission Denied"),
     TEAM_NOT_FOUND(404,"Team Not Found"),
+    POST_NOT_FOUND(404,"Post Not Found"),
     USER_NOT_FOUND(404,"User Not Found"),
     MEMBER_NOT_FOUND(404,"Member Not Found"),
     TARGET_NOT_FOUND(404,"Target Not Found"),
