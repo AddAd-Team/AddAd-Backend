@@ -35,7 +35,7 @@ public class MypageController {
         return mypageService.profile();
     }
 
-    @PostMapping(value = "/modifyProfile")
+    @PutMapping(value = "/modifyProfile")
     public ProfileResponse modifyProfile(ModifyProfile modifyProfile) throws IOException {
         return mypageService.ModifyProfile(modifyProfile);
     }
