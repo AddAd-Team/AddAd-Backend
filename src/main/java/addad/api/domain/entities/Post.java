@@ -10,7 +10,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @Entity
 @NoArgsConstructor
 public class Post {
@@ -46,5 +45,13 @@ public class Post {
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
     private List<Like> like;
 
-
+    @Builder Post(String title, String hashtag, String postImg, String description, Integer price, String postTime, String deadline) {
+        this.title = title;
+        this.hashtag = hashtag;
+        this.postImg = postImg;
+        this.description = description;
+        this.price = price;
+        this.postTime = postTime;
+        this.deadline = deadline;
+    }
 }
