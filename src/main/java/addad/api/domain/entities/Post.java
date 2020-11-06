@@ -22,16 +22,16 @@ public class Post {
     @Column
     private Integer userId;
 
-    @Column
+    @Column(length = 35)
     private String hashtag;
 
     @Column
     private String postImg;
 
-    @Column
+    @Column(length = 35)
     private String title;
 
-    @Column
+    @Column(length = 400)
     private String description;
 
     @Column
