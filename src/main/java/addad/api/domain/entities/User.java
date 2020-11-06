@@ -48,7 +48,7 @@ public class User {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-      private List<Like> likes;
+    private List<Like> likes;
 
     @Builder
     public User(String userEmail, String userPw, String userName, String hashtag, Userinfo userinfo) {
