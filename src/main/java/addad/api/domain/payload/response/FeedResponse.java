@@ -3,11 +3,11 @@ package addad.api.domain.payload.response;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 public class FeedResponse {
-
-    private Integer postId;
 
     private String profileImg;
 
@@ -20,4 +20,6 @@ public class FeedResponse {
     private String postTime;
 
     private String hashtag;
+
+    private LocalDateTime createdAt;
 }

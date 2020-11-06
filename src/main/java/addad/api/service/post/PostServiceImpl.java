@@ -69,11 +69,10 @@ public class PostServiceImpl implements PostService {
                             .price(post.getPrice())
                             .postTime(post.getPostTime())
                             .hashtag(post.getHashtag())
+                            .createdAt(post.getCreatedAt())
                             .build()
             );
         }
-
-
 
         return feedResponses;
     }

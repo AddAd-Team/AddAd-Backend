@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -42,10 +43,13 @@ public class Post {
     @Column
     private String deadline;
 
+    @Column
+    private LocalDateTime createdAt;
+
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
     private List<Like> like;
 
-    @Builder Post(String title, String hashtag, String postImg, String description, Integer price, String postTime, String deadline) {
+    @Builder Post(String title, String hashtag, String postImg, String description, Integer price, String postTime, String deadline, LocalDateTime createdAt) {
         this.title = title;
         this.hashtag = hashtag;
         this.postImg = postImg;
@@ -53,5 +57,6 @@ public class Post {
         this.price = price;
         this.postTime = postTime;
         this.deadline = deadline;
+        this.createdAt = createdAt;
     }
 }
