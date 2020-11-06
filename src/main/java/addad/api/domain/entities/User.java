@@ -1,7 +1,9 @@
 package addad.api.domain.entities;
 
 import addad.api.domain.entities.enums.Userinfo;
+import addad.api.domain.payload.request.ModifyProfile;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +17,7 @@ public class User {
     @Id
     @Column()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false, unique = true, length = 30)
     private String email;
@@ -31,6 +33,9 @@ public class User {
 
     @Column()
     private String hashtag;
+
+    @Column()
+    private String profileImg;
 
     @Column()
     private String refreshToken;
@@ -58,5 +63,18 @@ public class User {
         this.refreshToken = refreshToken;
 
         return this;
+    }
+
+    public User ChangeProfile(String Image, ModifyProfile modifyProfile) {
+        this.name = modifyProfile.getName();
+        this.profileImg = Image;
+        this.hashtag = modifyProfile.getHashtag();
+        this.description = modifyProfile.getDescription();
+
+        return this;
+    }
+
+    public void passwordChange(String password) {
+        this.password = password;
     }
 }

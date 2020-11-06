@@ -1,9 +1,11 @@
 package addad.api.exception;
 
-public class ExpiredTokenException extends RuntimeException {
+import addad.api.error.Exception.BusinessException;
+import addad.api.error.Exception.ErrorCode;
 
+public class ExpiredTokenException extends BusinessException {
     public ExpiredTokenException() {
-        super();
+        super(ErrorCode.EXPIRED_TOKEN);
     }
 
 }

@@ -1,13 +1,12 @@
 package addad.api.exception;
 
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import addad.api.error.Exception.BusinessException;
+import addad.api.error.Exception.ErrorCode;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidAuthCodeException extends RuntimeException {
+public class InvalidAuthCodeException extends BusinessException {
 
     public InvalidAuthCodeException() {
-            super("Invalid auth code");
+            super(ErrorCode.INVALID_AUTH_CODE);
     }
 }
