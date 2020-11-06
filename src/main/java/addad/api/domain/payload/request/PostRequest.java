@@ -24,7 +24,7 @@ public class PostRequest {
     private String hashtag;
 
     @NotBlank
-    private Integer price;
+    private String price;
 
     @NotBlank
     private String postTime;

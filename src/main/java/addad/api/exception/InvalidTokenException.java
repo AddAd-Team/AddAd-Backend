@@ -5,8 +5,10 @@ import addad.api.error.Exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class PostNotFoundException extends BusinessException {
-    public PostNotFoundException(){
-        super(ErrorCode.POST_NOT_FOUND);
+public class InvalidTokenException extends BusinessException {
+
+    public InvalidTokenException() {
+        super(ErrorCode.INVALID_TOKEN);
     }
+
 }

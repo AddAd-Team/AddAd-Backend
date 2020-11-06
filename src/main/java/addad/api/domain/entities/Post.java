@@ -35,7 +35,7 @@ public class Post {
     private String description;
 
     @Column
-    private Integer price;
+    private String price;
 
     @Column
     private String postTime;

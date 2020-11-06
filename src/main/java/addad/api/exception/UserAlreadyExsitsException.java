@@ -5,8 +5,9 @@ import addad.api.error.Exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class PostNotFoundException extends BusinessException {
-    public PostNotFoundException(){
-        super(ErrorCode.POST_NOT_FOUND);
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class UserAlreadyExsitsException extends BusinessException {
+    public UserAlreadyExsitsException() {
+        super(ErrorCode.USER_ALREADY_EXISTS_EXCEPTION);
     }
 }

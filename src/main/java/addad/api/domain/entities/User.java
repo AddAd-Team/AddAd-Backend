@@ -1,5 +1,6 @@
 package addad.api.domain.entities;
 
+import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyProfile;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,6 +59,12 @@ public class User {
         this.userinfo = userinfo;
     }
 
+    public User changeRefrehToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+
+        return this;
+    }
+
     public User ChangeProfile(String Image, ModifyProfile modifyProfile) {
         this.name = modifyProfile.getName();
         this.profileImg = Image;
@@ -67,4 +74,7 @@ public class User {
         return this;
     }
 
+    public void passwordChange(String password) {
+        this.password = password;
+    }
 }

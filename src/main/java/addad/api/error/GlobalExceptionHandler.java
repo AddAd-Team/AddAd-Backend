@@ -1,6 +1,5 @@
 package addad.api.error;
 
-
 import addad.api.error.exception.BusinessException;
 import addad.api.error.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
@@ -17,5 +16,5 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new ErrorResponse(errorCode.getStatus(), e.getMessage()),
                 HttpStatus.valueOf(errorCode.getStatus()));
     }
-
 }
+

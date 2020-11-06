@@ -1,4 +1,3 @@
-
 package addad.api.error;
 
 import lombok.AllArgsConstructor;
