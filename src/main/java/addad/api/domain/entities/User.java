@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -47,9 +48,6 @@ public class User {
     @Column()
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-      private List<Like> likes;
-
     @Builder
     public User(String userEmail, String userPw, String userName, String hashtag, Userinfo userinfo) {
         this.email = userEmail;
@@ -59,7 +57,7 @@ public class User {
         this.userinfo = userinfo;
     }
 
-    public User changeRefrehToken(String refreshToken) {
+    public User changeRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
 
         return this;
