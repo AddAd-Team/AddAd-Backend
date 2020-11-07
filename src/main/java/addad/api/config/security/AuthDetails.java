@@ -1,6 +1,5 @@
 package addad.api.config.security;
 
-import addad.api.domain.entities.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
