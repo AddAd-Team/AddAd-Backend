@@ -18,10 +18,10 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column
-    private Integer userId;
+    private Long userId;
 
     @Column
     private String hashtag;
