@@ -1,4 +1,4 @@
-package addad.api.error.exception;
+package addad.api.error.Exception;
 
 import lombok.Getter;
 
