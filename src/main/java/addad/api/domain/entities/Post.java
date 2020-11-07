@@ -55,4 +55,8 @@ public class Post {
         this.postTime = postTime;
         this.deadline = deadline;
     }
+<<<<<<< feature/mypage
 }
+=======
+}
+>>>>>>> develop
