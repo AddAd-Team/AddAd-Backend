@@ -1,11 +1,8 @@
 package addad.api.service.post;
 
 import addad.api.config.security.AuthenticationFacade;
-import addad.api.domain.entities.Post;
-import addad.api.domain.entities.User;
 import addad.api.domain.payload.request.PostRequest;
 import addad.api.domain.payload.response.FeedResponse;
-import addad.api.domain.payload.response.PostResponse;
 import addad.api.domain.repository.PostRepository;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.UserNotFoundException;
@@ -15,7 +12,7 @@ import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 import java.util.ArrayList;
 import java.util.List;
 
