@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -42,6 +43,9 @@ public class Post {
 
     @Column
     private String deadline;
+
+    @Column()
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "post")
     Set<Likes> likes;
