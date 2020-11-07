@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -42,8 +43,8 @@ public class Post {
     @Column
     private String deadline;
 
-    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
-    private List<Like> like;
+    @OneToMany(mappedBy = "post")
+    Set<Likes> likes;
 
     @Builder Post(String title, String hashtag, String postImg, String description, String price, String postTime, String deadline) {
         this.title = title;
