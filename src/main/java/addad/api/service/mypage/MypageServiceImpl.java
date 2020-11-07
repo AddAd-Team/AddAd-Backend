@@ -1,13 +1,9 @@
 package addad.api.service.mypage;
 
-import addad.api.config.security.AuthDetails;
 import addad.api.config.security.AuthenticationFacade;
-import addad.api.config.security.JwtTokenProvider;
-import addad.api.domain.entities.User;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyProfile;
 import addad.api.domain.payload.response.ProfileResponse;
-import addad.api.domain.payload.response.TokenResponse;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.IncorrectPasswordException;
 import addad.api.exception.UserNotFoundException;
@@ -15,7 +11,6 @@ import addad.api.utils.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
