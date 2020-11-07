@@ -76,7 +76,7 @@ public class MypageServiceImpl implements MypageService {
             s3Service.profileDelete(user.getProfileImg());
         }
 
-        User ChangedUser = user.ChangeProfile(s3Service.Upload(modifyProfile.getImage(), "userImg"), modifyProfile);
+        User ChangedUser = user.ChangeProfile(s3Service.Upload(modifyProfile.getImage(), "userImg/"), modifyProfile);
         userRepository.save(user);
 
         return ProfileResponse.builder()
