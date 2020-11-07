@@ -1,5 +1,6 @@
-package addad.api.error.Exception;
+package addad.api.error.exception;
 
+import addad.api.error.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
