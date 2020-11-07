@@ -1,6 +1,5 @@
 package addad.api.service.user;
 
-import addad.api.domain.entities.User;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.SignUp;
 import addad.api.domain.repository.UserRepository;
