@@ -1,6 +1,7 @@
 package addad.api.service.auth;
 
 import addad.api.config.security.JwtTokenProvider;
+import addad.api.domain.entities.User;
 import addad.api.domain.payload.request.SignIn;
 import addad.api.domain.payload.response.TokenResponse;
 import addad.api.domain.repository.UserRepository;
