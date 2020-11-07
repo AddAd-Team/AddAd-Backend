@@ -1,6 +1,7 @@
 package addad.api.domain.repository;
 
 
+import addad.api.domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
