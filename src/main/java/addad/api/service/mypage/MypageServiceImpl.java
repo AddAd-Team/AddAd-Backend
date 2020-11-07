@@ -1,6 +1,7 @@
 package addad.api.service.mypage;
 
 import addad.api.config.security.AuthenticationFacade;
+import addad.api.domain.entities.User;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyProfile;
 import addad.api.domain.payload.response.ProfileResponse;
