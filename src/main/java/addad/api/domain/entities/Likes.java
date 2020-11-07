@@ -11,14 +11,14 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor
-@IdClass(LikeId.class)
-@Table(name = "likes")
-public class Like {
-    @Id
-    @Column()
-    private Integer userId;
+public class Likes {
 
     @Id
-    @Column()
-    private Integer postId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    Post post;
+
 }
