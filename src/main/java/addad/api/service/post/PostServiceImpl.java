@@ -1,6 +1,8 @@
 package addad.api.service.post;
 
 import addad.api.config.security.AuthenticationFacade;
+import addad.api.domain.entities.Post;
+import addad.api.domain.entities.User;
 import addad.api.domain.payload.request.PostRequest;
 import addad.api.domain.payload.response.FeedResponse;
 import addad.api.domain.repository.PostRepository;

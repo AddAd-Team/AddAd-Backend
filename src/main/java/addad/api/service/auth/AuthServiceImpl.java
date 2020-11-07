@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(UserNotFoundException::new);
 
         TokenResponse token = responseToken(user.getEmail());
-        user.changeRefrehToken(token.getRefreshToken());
+        user.changeRefreshToken(token.getRefreshToken());
 
         return token;
     }
