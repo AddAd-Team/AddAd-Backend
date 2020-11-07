@@ -46,7 +46,8 @@ public class Post {
     @OneToMany(mappedBy = "post")
     Set<Likes> likes;
 
-    @Builder Post(String title, String hashtag, String postImg, String description, String price, String postTime, String deadline) {
+    @Builder
+    Post(String title, String hashtag, String postImg, String description, String price, String postTime, String deadline) {
         this.title = title;
         this.hashtag = hashtag;
         this.postImg = postImg;
@@ -55,8 +56,4 @@ public class Post {
         this.postTime = postTime;
         this.deadline = deadline;
     }
-<<<<<<< feature/mypage
 }
-=======
-}
->>>>>>> develop
