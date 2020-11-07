@@ -15,7 +15,7 @@ public class FeedResponse {
 
     private String postImg;
 
-    private Integer price;
+    private String price;
 
     private String postTime;
 
