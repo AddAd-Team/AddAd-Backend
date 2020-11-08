@@ -49,10 +49,12 @@ public class User {
     private LocalDateTime createdAt;
 
     @Builder
-    public User(String userEmail, String userPw, String userName, String hashtag, Userinfo userinfo) {
+    public User(Long id, String userEmail, String userPw, String profileImg, String name, String hashtag, Userinfo userinfo) {
+        this.id = id;
         this.email = userEmail;
         this.password = userPw;
-        this.name = userName;
+        this.profileImg = profileImg;
+        this.name = name;
         this.hashtag = hashtag;
         this.userinfo = userinfo;
     }
