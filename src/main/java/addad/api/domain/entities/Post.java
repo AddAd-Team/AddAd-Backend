@@ -27,7 +27,7 @@ public class Post {
     private String hashtag;
 
     @Column
-    private String postImg;
+    private String img;
 
     @Column
     private String title;
@@ -45,19 +45,20 @@ public class Post {
     private String deadline;
 
     @Column()
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     @OneToMany(mappedBy = "post")
     Set<Likes> likes;
 
     @Builder
-    Post(String title, String hashtag, String postImg, String description, String price, String postTime, String deadline) {
+    Post(String title, String hashtag, String img, String description, String price, String postTime, String deadline, String createdAt) {
         this.title = title;
         this.hashtag = hashtag;
-        this.postImg = postImg;
+        this.img = img;
         this.description = description;
         this.price = price;
         this.postTime = postTime;
         this.deadline = deadline;
+        this.createdAt = createdAt;
     }
 }
