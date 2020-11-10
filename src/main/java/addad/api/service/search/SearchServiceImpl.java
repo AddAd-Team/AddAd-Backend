@@ -4,7 +4,10 @@ import addad.api.domain.entities.User;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.SearchName;
 import addad.api.domain.payload.request.SearchTag;
+import addad.api.domain.payload.response.ProfileResponse;
+import addad.api.domain.payload.response.SearchResponse;
 import addad.api.domain.repository.UserRepository;
+import addad.api.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,12 +24,12 @@ public class SearchServiceImpl implements SearchService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> creatorSearchBasic(Pageable pageable) {
+    public List<SearchResponse> creatorSearchBasic(Pageable pageable) {
         Page<User> users = userRepository.findAllByUserinfo(Userinfo.creator, pageable);
-        List<User> userList = new ArrayList<>();
+        List<SearchResponse> userList = new ArrayList<>();
         for (User user : users) {
             userList.add(
-                    User.builder()
+                    SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
                             .profileImg(user.getProfileImg())
@@ -39,12 +42,12 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public List<User> creatorSearchByName(Pageable pageable, SearchName searchName) {
+    public List<SearchResponse> creatorSearchByName(Pageable pageable, SearchName searchName) {
         Page<User> users = userRepository.findAllByUserinfoAndNameContains(Userinfo.creator, searchName.getName(), pageable);
-        List<User> userList = new ArrayList<>();
+        List<SearchResponse> userList = new ArrayList<>();
         for (User user : users) {
             userList.add(
-                    User.builder()
+                    SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
                             .profileImg(user.getProfileImg())
@@ -57,12 +60,12 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public List<User> creatorSearchByTag(Pageable pageable, SearchTag searchTag) {
+    public List<SearchResponse> creatorSearchByTag(Pageable pageable, SearchTag searchTag) {
         Page<User> users = userRepository.findAllByUserinfoAndHashtagContains(Userinfo.creator, searchTag.getTag(), pageable);
-        List<User> userList = new ArrayList<>();
+        List<SearchResponse> userList = new ArrayList<>();
         for (User user : users) {
             userList.add(
-                    User.builder()
+                    SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
                             .profileImg(user.getProfileImg())
@@ -72,5 +75,19 @@ public class SearchServiceImpl implements SearchService {
         }
 
         return userList;
+    }
+
+    @Override
+    public ProfileResponse findOneUserById(Long Id) {
+        User user = userRepository.findById(Id)
+                .orElseThrow(UserNotFoundException::new);
+
+        return ProfileResponse.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .description(user.getDescription())
+                .profileImg(user.getProfileImg())
+                .hashtag(user.getHashtag())
+                .build();
     }
 }

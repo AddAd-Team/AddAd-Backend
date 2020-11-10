@@ -2,19 +2,17 @@ package addad.api.domain.payload.response;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Builder
-public class ProfileResponse {
+public class SearchResponse {
     private long id;
-
-    private String email;
 
     private String name;
 
-    private String description;
+    private String profileImg;
 
     private String hashtag;
-
-    private String profileImg;
 }
