@@ -6,15 +6,19 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.util.IOUtils;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Service
 @NoArgsConstructor
@@ -46,12 +50,12 @@ public class S3Service {
     public String Upload(MultipartFile file, String dirName) throws IOException {
         String fileName = file.getOriginalFilename();
 
-        s3Client.putObject(new PutObjectRequest(bucket, dirName + "/" + fileName, file.getInputStream(), null)
+        s3Client.putObject(new PutObjectRequest(bucket, dirName + fileName, file.getInputStream(), null)
                 .withCannedAcl(CannedAccessControlList.AuthenticatedRead));
-        return s3Client.getUrl(bucket, dirName + "/" + fileName).toString();
+        return s3Client.getUrl(bucket, dirName + fileName).toString();
     }
 
     public void profileDelete(String objectName) {
-        s3Client.deleteObject(bucket, "userImg/" + objectName);
+        s3Client.deleteObject(bucket, objectName);
     }
 }

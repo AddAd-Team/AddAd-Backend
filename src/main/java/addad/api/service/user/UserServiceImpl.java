@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
                 User.builder()
                         .userEmail(signUp.getEmail())
                         .userPw(passwordEncoder.encode(signUp.getPassword()))
-                        .userName(signUp.getName())
+                        .name(signUp.getName())
                         .hashtag(signUp.getTag())
                         .userinfo(Userinfo.valueOf(signUp.getUserinfo()))
                         .build()
