@@ -14,4 +14,5 @@ public interface PostService {
     void write(PostRequest postRequest);
     List<FeedResponse> getFeed(Pageable pageable);
     DetailFeedResponse getDetailFeed(Long id);
+    void deleteFeed(Long postId);
 }

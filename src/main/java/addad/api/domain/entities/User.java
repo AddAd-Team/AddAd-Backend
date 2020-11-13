@@ -2,13 +2,14 @@ package addad.api.domain.entities;
 
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyProfile;
-import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -47,6 +48,9 @@ public class User {
 
     @Column()
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    private List<Post> posts;
 
     @Builder
     public User(String userEmail, String userPw, String userName, String hashtag, Userinfo userinfo) {

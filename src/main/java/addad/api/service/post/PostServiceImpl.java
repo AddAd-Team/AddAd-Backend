@@ -40,11 +40,12 @@ public class PostServiceImpl implements PostService {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        Post post = postRepository.save(
+        postRepository.save(
                 Post.builder()
                         .title(postRequest.getTitle())
                         .hashtag(postRequest.getHashtag())
                         .img(imgUrl)
+                        .userId(user.getId())
                         .description(postRequest.getDescription())
                         .price(postRequest.getPrice())
                         .postTime(postRequest.getPostTime())
@@ -59,11 +60,10 @@ public class PostServiceImpl implements PostService {
         Page<Post> posts = postRepository.findAllBy(pageable);
         List<FeedResponse> feedResponses = new ArrayList<>();
         for (Post post : posts) {
-            User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
+            User user = userRepository.findById(post.getUserId())
                     .orElseThrow(UserNotFoundException::new);
             feedResponses.add(
                     FeedResponse.builder()
-                            .userId(post.getUserId())
                             .postId(post.getId())
                             .userId(user.getId())
                             .profileImg(user.getProfileImg())
@@ -90,7 +90,6 @@ public class PostServiceImpl implements PostService {
 
         return DetailFeedResponse.builder()
                 .postId(post.getId())
-                .userId(post.getUserId())
                 .title(post.getTitle())
                 .postImg(post.getImg())
                 .profileImg(user.getProfileImg())
@@ -100,6 +99,16 @@ public class PostServiceImpl implements PostService {
                 .hashtag(post.getHashtag())
                 .description(post.getDescription())
                 .build();
+    }
+
+    @Override
+    public void deleteFeed(Long postId){
+        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
+                .orElseThrow(UserNotFoundException::new);
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+
     }
 
 }

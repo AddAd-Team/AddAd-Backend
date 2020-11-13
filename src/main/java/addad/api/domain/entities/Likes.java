@@ -1,9 +1,6 @@
 package addad.api.domain.entities;
 
-import lombok.Generated;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -17,8 +14,15 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    Post post;
+    @Column
+    private Long postId;
 
+//    @Column
+//    private Long userId;
+
+    @Builder
+    public Likes(Long postId/*, Long userId*/){
+        this.postId = postId;
+        // this.userId = userId;
+    }
 }

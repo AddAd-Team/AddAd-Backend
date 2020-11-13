@@ -44,14 +44,15 @@ public class Post {
     @Column
     private String deadline;
 
-    @Column()
+    @Column
     private String createdAt;
 
-    @OneToMany(mappedBy = "post")
-    Set<Likes> likes;
+    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
+    private List<Likes> likes;
 
     @Builder
-    Post(String title, String hashtag, String img, String description, String price, String postTime, String deadline, String createdAt) {
+    public Post(Long userId, String title, String hashtag, String img, String description, String price, String postTime, String deadline, String createdAt) {
+        this.userId = userId;
         this.title = title;
         this.hashtag = hashtag;
         this.img = img;

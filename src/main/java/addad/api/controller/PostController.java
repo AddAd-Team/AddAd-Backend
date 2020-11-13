@@ -1,6 +1,7 @@
 package addad.api.controller;
 
 import addad.api.domain.payload.request.PostRequest;
+import addad.api.domain.payload.response.DetailFeedResponse;
 import addad.api.domain.payload.response.FeedResponse;
 import addad.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,15 @@ public class PostController {
     @GetMapping("/feed")
     public List<FeedResponse> getFeed(@PageableDefault(sort = {"createdAt"}, size = 3) Pageable pageable) {
         return postService.getFeed(pageable);
+    }
+
+    @GetMapping("/feed/{postId}")
+    public DetailFeedResponse getDetailFeed(@PathVariable Long postId) {
+        return postService.getDetailFeed(postId);
+    }
+
+    @DeleteMapping("/feed/{postId}")
+    public void deleteFeed(@PathVariable Long postId) {
+        postService.deleteFeed(postId);
     }
 }
