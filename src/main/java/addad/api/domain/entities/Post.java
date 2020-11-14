@@ -9,7 +9,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString(exclude = "post")
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
@@ -50,10 +49,10 @@ public class Post {
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL)
     private List<Likes> likes;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL)
     private List<Application> applicaions;
 
     @Builder
