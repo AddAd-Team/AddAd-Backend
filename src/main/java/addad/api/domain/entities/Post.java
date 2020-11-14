@@ -1,19 +1,17 @@
 package addad.api.domain.entities;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
+@ToString(exclude = "post")
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
 
     @Id
@@ -21,7 +19,7 @@ public class Post {
     private Long id;
 
     @Column
-    private Long userId;
+    private Long user_id;
 
     @Column
     private String hashtag;
@@ -47,12 +45,21 @@ public class Post {
     @Column()
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "post")
-    Set<Likes> likes;
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonIgnore
+    private User user;
+
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    private List<Likes> likes;
+
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    private List<Application> applicaions;
 
     @Builder
-    Post(String title, String hashtag, String postImg, String description, String price, String postTime, String deadline) {
+    Post(String title, Long user_id, String hashtag, String postImg, String description, String price, String postTime, String deadline) {
         this.title = title;
+        this.user_id = user_id;
         this.hashtag = hashtag;
         this.postImg = postImg;
         this.description = description;
