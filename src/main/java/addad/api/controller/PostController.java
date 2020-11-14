@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class PostController {
     private final PostService postService;
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/write")
+    @PostMapping("/write")
     public void write(PostRequest postRequest) {
         postService.write(postRequest);
     }
@@ -31,8 +32,8 @@ public class PostController {
         return postService.getFeed(pageable);
     }
 
-    @PostMapping("/application")
-    public List<FeedResponse> application(@PageableDefault(sort = {"createdAt"}, size = 10) Pageable pageable) {
-        return postService.application(pageable);
+    @PostMapping("/apply")
+    public void apply(@RequestParam("id") @Valid Long Id) {
+        postService.apply(Id);
     }
 }
