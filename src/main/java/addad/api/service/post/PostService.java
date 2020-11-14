@@ -12,4 +12,5 @@ import java.util.List;
 public interface PostService {
     void write(PostRequest postRequest);
     List<FeedResponse> getFeed(Pageable pageable);
+//    List<FeedResponse> application(Pageable pageable);
 }
