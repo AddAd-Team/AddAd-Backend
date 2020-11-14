@@ -24,7 +24,7 @@ public class Post {
     private String hashtag;
 
     @Column
-    private String postImg;
+    private String img;
 
     @Column
     private String title;
@@ -42,7 +42,7 @@ public class Post {
     private String deadline;
 
     @Column()
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
@@ -60,10 +60,11 @@ public class Post {
         this.title = title;
         this.user_id = user_id;
         this.hashtag = hashtag;
-        this.postImg = postImg;
+        this.img = img;
         this.description = description;
         this.price = price;
         this.postTime = postTime;
         this.deadline = deadline;
+        this.createdAt = createdAt;
     }
 }
