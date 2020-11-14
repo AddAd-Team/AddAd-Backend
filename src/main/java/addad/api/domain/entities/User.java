@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString(exclude = "user")
 @Entity
 @NoArgsConstructor
 public class User {
@@ -50,6 +49,9 @@ public class User {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
+    private List<Likes> likes;
 
     @Builder
     public User(Long id, String userEmail, String userPw, String profileImg, String name, String hashtag, Userinfo userinfo) {
