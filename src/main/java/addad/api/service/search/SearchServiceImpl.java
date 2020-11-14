@@ -25,16 +25,18 @@ public class SearchServiceImpl implements SearchService {
     private final UserRepository userRepository;
     private final DefaultImg defaultImg;
 
+
     @Override
     public List<SearchResponse> creatorSearchBasic(Pageable pageable) {
         Page<User> users = userRepository.findAllByUserinfo(Userinfo.creator, pageable);
+
         List<SearchResponse> userList = new ArrayList<>();
         for (User user : users) {
             userList.add(
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
+                            .profileImg(defaultImg.basic(user.getProfileImg()))
                             .hashtag(user.getHashtag())
                             .build()
             );
@@ -52,7 +54,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
+                            .profileImg(defaultImg.basic(user.getProfileImg()))
                             .hashtag(user.getHashtag())
                             .build()
             );
@@ -70,7 +72,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
+                            .profileImg(defaultImg.basic(user.getProfileImg()))
                             .hashtag(user.getHashtag())
                             .build()
             );

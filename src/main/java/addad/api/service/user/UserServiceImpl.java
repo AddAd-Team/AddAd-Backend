@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
                         .name(signUp.getName())
                         .hashtag(signUp.getTag())
                         .userinfo(Userinfo.valueOf(signUp.getUserinfo()))
+                        .profileImg("")
                         .build()
         );
     }
