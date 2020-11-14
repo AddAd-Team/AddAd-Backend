@@ -23,17 +23,17 @@ public class UserController {
     private final EmailService emailService;
     private final S3Service s3Service;
 
-    @PostMapping(value = "/emailSender")
+    @PostMapping("/emailSender")
     public void emailSender(@RequestBody() @NotNull @Email userEmail email) {
         emailService.sendEmail(email.getEmail());
     }
 
-    @PutMapping(value = "/emailAuth")
+    @PutMapping("/emailAuth")
     public void verifyEmail(@RequestBody @Valid VerifyCodeRequest verifyCodeRequest) {
         emailService.verifyEmail(verifyCodeRequest);
     }
 
-    @PostMapping(value = "/signup")
+    @PostMapping("/signup")
     public void signUp(@RequestBody @Valid SignUp signUp) {
         userService.signUp(signUp);
     }
