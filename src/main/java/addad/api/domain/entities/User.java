@@ -3,6 +3,7 @@ package addad.api.domain.entities;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyProfile;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString(exclude = "user")
 @Entity
 @NoArgsConstructor
 public class User {
@@ -45,7 +47,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Userinfo userinfo;
 
-    @Column()
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @Builder
