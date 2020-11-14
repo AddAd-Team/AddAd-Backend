@@ -50,7 +50,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(user.getProfileImg())
+                            .profileImg(defaultImg(user.getProfileImg(), user.getUserinfo()))
                             .hashtag(user.getHashtag())
                             .build()
             );
@@ -68,7 +68,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(user.getProfileImg())
+                            .profileImg(defaultImg(user.getProfileImg(), user.getUserinfo()))
                             .hashtag(user.getHashtag())
                             .build()
             );
@@ -85,9 +85,20 @@ public class SearchServiceImpl implements SearchService {
         return ProfileResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
+                .name(user.getName())
                 .description(user.getDescription())
-                .profileImg(user.getProfileImg())
+                .profileImg(defaultImg(user.getProfileImg(), user.getUserinfo()))
                 .hashtag(user.getHashtag())
                 .build();
+    }
+
+    public String defaultImg(String image, Userinfo userinfo) {
+        if (image == null && userinfo == Userinfo.creator) {
+            image = "https://addad.s3.ap-northeast-2.amazonaws.com/userImg/creator.jpg";
+        } else if (image == null && userinfo == Userinfo.advertiser) {
+            image = "https://addad.s3.ap-northeast-2.amazonaws.com/userImg/%E1%84%80%E1%85%AA%E1%86%BC%E1%84%80%E1%85%A9%E1%84%8C%E1%85%AE111.jpg";
+        }
+
+        return image;
     }
 }
