@@ -1,12 +1,12 @@
 package addad.api.controller;
 
 import addad.api.domain.payload.request.PostRequest;
+import addad.api.domain.payload.response.DetailFeedResponse;
 import addad.api.domain.payload.response.FeedResponse;
 import addad.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +21,7 @@ public class PostController {
 
     private final PostService postService;
 
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/write")
+    @PostMapping(value = "/write")
     public void write(PostRequest postRequest) {
         postService.write(postRequest);
     }
@@ -35,5 +34,9 @@ public class PostController {
     @PostMapping("/apply")
     public void apply(@RequestParam("id") @Valid Long Id) {
         postService.apply(Id);
+      
+    @GetMapping("/feed/{id}")
+    public DetailFeedResponse detailFeed(@PathVariable Long id){
+        return postService.getDetailFeed(id);
     }
 }
