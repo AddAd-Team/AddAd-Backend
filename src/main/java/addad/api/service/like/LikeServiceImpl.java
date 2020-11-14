@@ -1,6 +1,6 @@
 package addad.api.service.like;
 
-import addad.api.domain.repository.LikeRepository;
+//import addad.api.domain.repository.LikeRepository;
 import addad.api.domain.repository.PostRepository;
 import addad.api.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class LikeServiceImpl implements LikeService {
     private UserRepository userRepository;
     private PostRepository postRepository;
-    private LikeRepository likeRepository;
+//    private LikeRepository likeRepository;
 
     @Override
     public void feedLike(String token, Integer postId) {
