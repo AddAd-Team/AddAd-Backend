@@ -3,6 +3,7 @@ package addad.api.service.post;
 import addad.api.config.security.AuthenticationFacade;
 import addad.api.domain.entities.Post;
 import addad.api.domain.entities.User;
+import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.PostRequest;
 import addad.api.domain.payload.response.FeedResponse;
 import addad.api.domain.repository.PostRepository;
@@ -36,9 +37,10 @@ public class PostServiceImpl implements PostService {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        Post post = postRepository.save(
+        postRepository.save(
                 Post.builder()
                         .title(postRequest.getTitle())
+                        .user_id(user.getId())
                         .hashtag(postRequest.getHashtag())
                         .postImg(imgUrl)
                         .description(postRequest.getDescription())
@@ -54,11 +56,9 @@ public class PostServiceImpl implements PostService {
         Page<Post> posts = postRepository.findAllBy(pageable);
         List<FeedResponse> feedResponses = new ArrayList<>();
         for (Post post : posts) {
-            User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
-                    .orElseThrow(UserNotFoundException::new);
             feedResponses.add(
                     FeedResponse.builder()
-                            .profileImg(user.getProfileImg())
+                            .profileImg(defaultImg(post.getUser().getProfileImg()))
                             .title(post.getTitle())
                             .postImg(post.getPostImg())
                             .price(post.getPrice())
@@ -69,7 +69,15 @@ public class PostServiceImpl implements PostService {
             );
         }
 
+
         return feedResponses;
     }
 
+    public String defaultImg(String image) {
+        if (image == null) {
+            image = "https://addad.s3.ap-northeast-2.amazonaws.com/userImg/%E1%84%80%E1%85%AA%E1%86%BC%E1%84%80%E1%85%A9%E1%84%8C%E1%85%AE111.jpg";
+        }
+
+        return image;
+    }
 }
