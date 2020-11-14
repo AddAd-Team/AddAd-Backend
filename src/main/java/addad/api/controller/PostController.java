@@ -27,7 +27,12 @@ public class PostController {
     }
 
     @GetMapping("/feed")
-    public List<FeedResponse> getFeed(@PageableDefault(sort = {"createdAt"}, size = 3) Pageable pageable) {
+    public List<FeedResponse> getFeed(@PageableDefault(sort = {"createdAt"}, size = 10) Pageable pageable) {
         return postService.getFeed(pageable);
+    }
+
+    @PostMapping("/application")
+    public List<FeedResponse> application(@PageableDefault(sort = {"createdAt"}, size = 10) Pageable pageable) {
+        return postService.application(pageable);
     }
 }
