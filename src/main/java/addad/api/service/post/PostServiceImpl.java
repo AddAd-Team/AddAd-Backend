@@ -20,8 +20,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.stream.IIOByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -67,8 +69,8 @@ public class PostServiceImpl implements PostService {
         List<FeedResponse> feedResponses = new ArrayList<>();
         for (Post post : posts) {
 
-            Likes likes = likesRepository.findByUser_idAndAndPost_id(user.getId(), post.getId());
-            Application application = applicationRepository.findByUser_idAndAndPost_id(user.getId(), post.getId());
+            Optional<Likes> likes = likesRepository.findByUser_idAndAndPost_id(user.getId(), post.getId());
+            Optional<Application> application = applicationRepository.findByUser_idAndAndPost_id(user.getId(), post.getId());
 
             feedResponses.add(
                     FeedResponse.builder()
@@ -78,8 +80,8 @@ public class PostServiceImpl implements PostService {
                             .price(post.getPrice())
                             .postTime(post.getPostTime())
                             .hashtag(post.getHashtag())
-                            .likes(likes.getId()!=0)
-                            .application(application.getId()!=0)
+                            .likes(likes.isPresent())
+                            .application(likes.isPresent())
                             .createdAt(post.getCreatedAt())
                             .build()
             );
