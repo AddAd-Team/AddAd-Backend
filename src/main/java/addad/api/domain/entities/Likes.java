@@ -1,14 +1,16 @@
 package addad.api.domain.entities;
 
-import lombok.Generated;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
+@ToString(exclude = "post")
 @Entity
 @NoArgsConstructor
 public class Likes {
@@ -17,8 +19,11 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    Post post;
+    @Column()
+    private Long post_id;
 
+    @ManyToOne
+    @JoinColumn(name="post_id", insertable = false, updatable = false)
+    @JsonIgnore
+    private Post post;
 }
