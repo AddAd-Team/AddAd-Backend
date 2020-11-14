@@ -8,6 +8,7 @@ import addad.api.domain.payload.response.ProfileResponse;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.IncorrectPasswordException;
 import addad.api.exception.UserNotFoundException;
+import addad.api.utils.DefaultImg;
 import addad.api.utils.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,8 @@ public class MypageServiceImpl implements MypageService {
     private final S3Service s3Service;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final DefaultImg defaultImg;
+
 
     @Override
     public void passwordAuth (String Password) {
@@ -47,17 +50,10 @@ public class MypageServiceImpl implements MypageService {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        String image = user.getProfileImg();
-        if (image == null && user.getUserinfo() == Userinfo.creator) {
-            image = "https://addad.s3.ap-northeast-2.amazonaws.com/userImg/creator.jpg";
-        } else if (image == null && user.getUserinfo() == Userinfo.advertiser) {
-            image = "https://addad.s3.ap-northeast-2.amazonaws.com/userImg/%E1%84%80%E1%85%AA%E1%86%BC%E1%84%80%E1%85%A9%E1%84%8C%E1%85%AE111.jpg";
-        }
-
         return ProfileResponse.builder()
                 .email(authenticationFacade.getUserEmail())
                 .name(user.getName())
-                .profileImg(image)
+                .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                 .hashtag(user.getHashtag())
                 .description(user.getDescription())
                 .build();

@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,11 +27,15 @@ public class PostController {
     }
 
     @GetMapping("/feed")
-    public List<FeedResponse> feed(@PageableDefault(sort = {"createdAt"}, size = 10) Pageable pageable) {
+    public List<FeedResponse> getFeed(@PageableDefault(sort = {"createdAt"}, size = 10) Pageable pageable) {
         return postService.getFeed(pageable);
     }
 
-    @GetMapping("feed/{id}")
+    @PostMapping("/apply")
+    public void apply(@RequestParam("id") @Valid Long Id) {
+        postService.apply(Id);
+      
+    @GetMapping("/feed/{id}")
     public DetailFeedResponse detailFeed(@PathVariable Long id){
         return postService.getDetailFeed(id);
     }

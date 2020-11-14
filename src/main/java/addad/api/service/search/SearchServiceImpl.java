@@ -8,6 +8,7 @@ import addad.api.domain.payload.response.ProfileResponse;
 import addad.api.domain.payload.response.SearchResponse;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.UserNotFoundException;
+import addad.api.utils.DefaultImg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import java.util.List;
 public class SearchServiceImpl implements SearchService {
 
     private final UserRepository userRepository;
+    private final DefaultImg defaultImg;
 
     @Override
     public List<SearchResponse> creatorSearchBasic(Pageable pageable) {
@@ -32,7 +34,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(user.getProfileImg())
+                            .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                             .hashtag(user.getHashtag())
                             .build()
             );
@@ -50,7 +52,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(user.getProfileImg())
+                            .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                             .hashtag(user.getHashtag())
                             .build()
             );
@@ -68,7 +70,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(user.getProfileImg())
+                            .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                             .hashtag(user.getHashtag())
                             .build()
             );
@@ -85,8 +87,9 @@ public class SearchServiceImpl implements SearchService {
         return ProfileResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
+                .name(user.getName())
                 .description(user.getDescription())
-                .profileImg(user.getProfileImg())
+                .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                 .hashtag(user.getHashtag())
                 .build();
     }

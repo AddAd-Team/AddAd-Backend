@@ -3,6 +3,7 @@ package addad.api.domain.entities;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyProfile;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -45,8 +46,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Userinfo userinfo;
 
-    @Column()
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
+    private List<Likes> likes;
 
     @Builder
     public User(Long id, String userEmail, String userPw, String profileImg, String name, String hashtag, Userinfo userinfo) {

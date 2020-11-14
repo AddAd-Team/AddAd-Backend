@@ -13,5 +13,6 @@ import java.util.List;
 public interface PostService {
     void write(PostRequest postRequest);
     List<FeedResponse> getFeed(Pageable pageable);
+    void apply(Long Id);
     DetailFeedResponse getDetailFeed(Long id);
 }

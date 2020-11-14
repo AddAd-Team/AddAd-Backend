@@ -1,9 +1,7 @@
 package addad.api.domain.entities;
 
-import lombok.Generated;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -17,8 +15,25 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    Post post;
+    @Column()
+    private Long post_id;
 
+    @Column()
+    private Long user_id;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", insertable = false, updatable = false)
+    @JsonIgnore
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name="post_id", insertable = false, updatable = false)
+    @JsonIgnore
+    private Post post;
+
+    @Builder
+    Likes(Long user_id, Long post_id) {
+        this.user_id = user_id;
+        this.post_id = post_id;
+    }
 }
