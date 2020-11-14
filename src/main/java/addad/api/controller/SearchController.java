@@ -20,17 +20,17 @@ import java.util.List;
 public class SearchController {
     private final SearchService searchService;
 
-    @GetMapping(value = "/basic")
+    @GetMapping("/basic")
     public List<SearchResponse> creatorSearchBasic(@PageableDefault(sort = {"createdAt"}, size = 10) Pageable pageable) {
         return searchService.creatorSearchBasic(pageable);
     }
 
-    @GetMapping(value = "/name")
+    @GetMapping("/name")
     public List<SearchResponse> creatorSearchByName(@PageableDefault(sort = {"createdAt"}, size = 10) Pageable pageable, SearchName searchName) {
         return searchService.creatorSearchByName(pageable, searchName);
     }
 
-    @GetMapping(value = "/tag")
+    @GetMapping("/tag")
     public List<SearchResponse> creatorSearchByTag(@PageableDefault(sort = {"createdAt"}, size = 10) Pageable pageable, SearchTag searchTag) {
         return searchService.creatorSearchByTag(pageable, searchTag);
     }
