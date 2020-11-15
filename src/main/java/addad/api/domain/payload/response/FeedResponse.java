@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 public class FeedResponse {
 
+    private Long id;
+
     private String profileImg;
 
     private String title;
