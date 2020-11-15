@@ -74,6 +74,7 @@ public class PostServiceImpl implements PostService {
 
             feedResponses.add(
                     FeedResponse.builder()
+                            .id(post.getId())
                             .profileImg(defaultImg.basic(post.getUser().getProfileImg()))
                             .title(post.getTitle())
                             .postImg(post.getPostImg())
