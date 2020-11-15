@@ -55,6 +55,7 @@ public class PostServiceImpl implements PostService {
                         .user_id(user.getId())
                         .hashtag(postRequest.getHashtag())
                         .img(imgUrl)
+                        .userId(user.getId())
                         .description(postRequest.getDescription())
                         .price(postRequest.getPrice())
                         .postTime(postRequest.getPostTime())
@@ -87,6 +88,7 @@ public class PostServiceImpl implements PostService {
                             .likes(likes.isPresent())
                             .application(likes.isPresent())
                             .createdAt(post.getCreatedAt())
+                            .isLike(likeRepository.findByPostId(post.getId()) != null)
                             .build()
             );
         }
@@ -117,7 +119,6 @@ public class PostServiceImpl implements PostService {
 
         return DetailFeedResponse.builder()
                 .postId(post.getId())
-                .userId(post.getUserId())
                 .title(post.getTitle())
                 .postImg(post.getImg())
                 .profileImg(user.getProfileImg())
@@ -128,4 +129,15 @@ public class PostServiceImpl implements PostService {
                 .description(post.getDescription())
                 .build();
     }
+
+    @Override
+    public void deleteFeed(Long postId){
+        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
+                .orElseThrow(UserNotFoundException::new);
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+
+    }
+
 }

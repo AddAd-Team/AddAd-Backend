@@ -39,4 +39,14 @@ public class PostController {
     public DetailFeedResponse detailFeed(@PathVariable Long id){
         return postService.getDetailFeed(id);
     }
+
+    @GetMapping("/feed/{postId}")
+    public DetailFeedResponse getDetailFeed(@PathVariable Long postId) {
+        return postService.getDetailFeed(postId);
+    }
+
+    @DeleteMapping("/feed/{postId}")
+    public void deleteFeed(@PathVariable Long postId) {
+        postService.deleteFeed(postId);
+    }
 }

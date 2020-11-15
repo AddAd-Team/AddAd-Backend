@@ -15,4 +15,5 @@ public interface PostService {
     List<FeedResponse> getFeed(Pageable pageable);
     void apply(Long Id);
     DetailFeedResponse getDetailFeed(Long id);
+    void deleteFeed(Long postId);
 }

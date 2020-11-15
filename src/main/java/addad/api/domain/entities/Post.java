@@ -41,7 +41,7 @@ public class Post {
     @Column
     private String deadline;
 
-    @Column()
+    @Column
     private String createdAt;
 
     @ManyToOne
@@ -56,7 +56,8 @@ public class Post {
     private List<Application> applicaions;
 
     @Builder
-    Post(String title, Long user_id, String hashtag, String postImg, String description, String price, String postTime, String deadline) {
+    public Post(Long userId, String title, String hashtag, String img, String description, String price, String postTime, String deadline, String createdAt) {
+        this.userId = userId;
         this.title = title;
         this.user_id = user_id;
         this.hashtag = hashtag;

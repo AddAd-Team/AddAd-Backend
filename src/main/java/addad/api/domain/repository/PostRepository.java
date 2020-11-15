@@ -6,7 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findAllBy(Pageable pageable);
-
+    Optional<Post> findById(Long id);
 }
