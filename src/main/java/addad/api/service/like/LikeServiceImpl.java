@@ -33,7 +33,7 @@ public class LikeServiceImpl implements LikeService {
         likeRepository.save(
                 Likes.builder()
                         .postId(post.getId())
-                        //.userId(user.getId())
+                        .userId(user.getId())
                         .build()
         );
 

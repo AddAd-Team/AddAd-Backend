@@ -26,4 +26,6 @@ public class FeedResponse {
     private String hashtag;
 
     private String createdAt;
+
+    private Boolean isLike;
 }

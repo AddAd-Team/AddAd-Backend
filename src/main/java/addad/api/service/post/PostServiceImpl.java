@@ -1,11 +1,13 @@
 package addad.api.service.post;
 
 import addad.api.config.security.AuthenticationFacade;
+import addad.api.domain.entities.Likes;
 import addad.api.domain.entities.Post;
 import addad.api.domain.entities.User;
 import addad.api.domain.payload.request.PostRequest;
 import addad.api.domain.payload.response.DetailFeedResponse;
 import addad.api.domain.payload.response.FeedResponse;
+import addad.api.domain.repository.LikeRepository;
 import addad.api.domain.repository.PostRepository;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.PostNotFoundException;
@@ -26,7 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-    //    private final LikeRepository likeRepository;
+    private final LikeRepository likeRepository;
     private final UserRepository userRepository;
     private final S3Service s3Service;
     private final AuthenticationFacade authenticationFacade;
@@ -62,6 +64,7 @@ public class PostServiceImpl implements PostService {
         for (Post post : posts) {
             User user = userRepository.findById(post.getUserId())
                     .orElseThrow(UserNotFoundException::new);
+
             feedResponses.add(
                     FeedResponse.builder()
                             .postId(post.getId())
@@ -73,6 +76,7 @@ public class PostServiceImpl implements PostService {
                             .postTime(post.getPostTime())
                             .hashtag(post.getHashtag())
                             .createdAt(post.getCreatedAt())
+                            .isLike(likeRepository.findByPostId(post.getId()) != null)
                             .build()
             );
         }

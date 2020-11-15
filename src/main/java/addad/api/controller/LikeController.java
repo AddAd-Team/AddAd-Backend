@@ -6,18 +6,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/post")
+@RequestMapping("/api/like")
 @RequiredArgsConstructor
 public class LikeController {
 
     private final LikeService likeService;
 
-    @PostMapping("/{postId}/like")
+    @PostMapping("/{postId}")
     public void feedLike(@PathVariable Long postId){
         likeService.feedLike(postId);
     }
 
-    @DeleteMapping("/{postId}/like")
+    @DeleteMapping("/{postId}")
     public void feedUnlike(@PathVariable Long postId){
         likeService.feedUnlike(postId);
     }

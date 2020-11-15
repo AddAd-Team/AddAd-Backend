@@ -17,12 +17,12 @@ public class Likes {
     @Column
     private Long postId;
 
-//    @Column
-//    private Long userId;
+    @Column
+    private Long userId;
 
     @Builder
-    public Likes(Long postId/*, Long userId*/){
+    public Likes(Long postId, Long userId){
         this.postId = postId;
-        // this.userId = userId;
+        this.userId = userId;
     }
 }
