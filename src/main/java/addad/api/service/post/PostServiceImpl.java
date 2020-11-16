@@ -113,6 +113,8 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
 
+        postRepository.deleteById(postId);
+
     }
 
 }
