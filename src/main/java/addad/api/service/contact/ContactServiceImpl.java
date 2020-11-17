@@ -20,8 +20,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ContactServiceImpl implements ContactService {
-    private final UserRepository userRepository;
-    private final PostRepository postRepository;
     private final ContactRepository contactRepository;
 
     @Override
@@ -31,9 +29,9 @@ public class ContactServiceImpl implements ContactService {
         for (Contact contact : contacts) {
             contactRepository.save(
                     Contact.builder()
-                            .advertiser_id(contact.getAdvertiser().getId())
-                            .creator_id(contact.getCreator().getId())
-                            .post_id(contact.getPost().getId())
+                            .advertiserId(contact.getAdvertiser().getId())
+                            .creatorId(contact.getCreator().getId())
+                            .postId(contact.getPost().getId())
                             .build()
             );
 
