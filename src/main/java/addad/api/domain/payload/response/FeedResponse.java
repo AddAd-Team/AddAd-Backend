@@ -25,11 +25,9 @@ public class FeedResponse {
 
     private String postTime;
 
+    private String DateRemaining;
+
     private String hashtag;
 
     private Boolean likes;
-
-    private Boolean application;
-
-    private LocalDateTime createdAt;
 }
