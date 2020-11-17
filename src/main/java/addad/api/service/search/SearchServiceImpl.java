@@ -95,4 +95,6 @@ public class SearchServiceImpl implements SearchService {
                 .hashtag(user.getHashtag())
                 .build();
     }
+
+
 }
