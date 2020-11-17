@@ -21,10 +21,12 @@ import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import javax.imageio.stream.IIOByteBuffer;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +54,7 @@ public class PostServiceImpl implements PostService {
         postRepository.save(
                 Post.builder()
                         .title(postRequest.getTitle())
-                        .user_id(user.getId())
+                        .userId(user.getId())
                         .hashtag(postRequest.getHashtag())
                         .img(imgUrl)
                         .userId(user.getId())
@@ -75,58 +77,49 @@ public class PostServiceImpl implements PostService {
         for (Post post : posts) {
 
             Optional<Likes> likes = likesRepository.findByUser_idAndAndPost_id(user.getId(), post.getId());
-            Optional<Application> application = applicationRepository.findByUser_idAndAndPost_id(user.getId(), post.getId());
 
             feedResponses.add(
                     FeedResponse.builder()
+                            .userId(post.getUser().getId())
+                            .postId(post.getId())
                             .profileImg(defaultImg.basic(post.getUser().getProfileImg()))
                             .title(post.getTitle())
-                            .postImg(post.getImg())
+                            .postImg(post.getPost_img())
                             .price(post.getPrice())
                             .postTime(post.getPostTime())
+                            .DateRemaining(dateCalculation(post.getPostTime()))
                             .hashtag(post.getHashtag())
                             .likes(likes.isPresent())
-                            .application(likes.isPresent())
-                            .createdAt(post.getCreatedAt())
-                            .isLike(likeRepository.findByPostId(post.getId()) != null)
                             .build()
             );
         }
 
-
         return feedResponses;
-    }
-
-    @Override
-    public void apply(Long Id) {
-        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
-                .orElseThrow(UserNotFoundException::new);
-
-        applicationRepository.save(
-                Application.builder()
-                    .user_id(user.getId())
-                    .post_id(Id)
-                    .build()
-        );
     }
   
     public DetailFeedResponse getDetailFeed(Long id){
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFoundException::new);
 
-        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
-                .orElseThrow(UserNotFoundException::new);
+        Optional<Likes> likes = likesRepository.findByUser_idAndAndPost_id(post.getUser().getId(), post.getId());
+        Optional<Application> application = applicationRepository.findByUser_idAndAndPost_id(post.getUser().getId(), post.getId());
+
 
         return DetailFeedResponse.builder()
                 .postId(post.getId())
+                .userId(post.getUser().getId())
                 .title(post.getTitle())
-                .postImg(post.getImg())
-                .profileImg(user.getProfileImg())
+                .postImg(post.getPost_img())
+                .profileImg(post.getUser().getProfileImg())
                 .price(post.getPrice())
                 .postTime(post.getPostTime())
                 .deadline(post.getDeadline())
+                .recruitmentClosing(dateCalculation(post.getPostTime()))
+                .adClosing(dateCalculation(post.getDeadline()))
                 .hashtag(post.getHashtag())
                 .description(post.getDescription())
+                .likes(likes.isPresent())
+                .application(application.isPresent())
                 .build();
     }
 
@@ -140,4 +133,20 @@ public class PostServiceImpl implements PostService {
 
     }
 
+    public String dateCalculation(String strStartDate) {
+        String strEndDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String strFormat = "yyyyMMdd";
+
+        SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+        try{
+            Date startDate = sdf.parse(strStartDate);
+            Date endDate = sdf.parse(strEndDate);
+
+            long diffDay = (startDate.getTime() - endDate.getTime()) / (24*60*60*1000);
+            return String.valueOf(diffDay);
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
