@@ -2,6 +2,7 @@ package addad.api.service.mypage;
 
 import addad.api.domain.payload.request.ModifyPost;
 import addad.api.domain.payload.request.ModifyProfile;
+import addad.api.domain.payload.response.ADListResponse;
 import addad.api.domain.payload.response.ADResponse;
 import addad.api.domain.payload.response.PostResponse;
 import addad.api.domain.payload.response.ProfileResponse;
