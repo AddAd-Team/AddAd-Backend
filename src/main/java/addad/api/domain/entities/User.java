@@ -2,10 +2,9 @@ package addad.api.domain.entities;
 
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyProfile;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -46,11 +45,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Userinfo userinfo;
 
-    @Column()
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    private List<Post> posts;
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
+    private List<Likes> likes;
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
     private List<Contact> creator;
@@ -59,10 +59,12 @@ public class User {
     private List<Contact> advertiser;
 
     @Builder
-    public User(String userEmail, String userPw, String userName, String hashtag, Userinfo userinfo) {
+    public User(Long id, String userEmail, String userPw, String profileImg, String name, String hashtag, Userinfo userinfo) {
+        this.id = id;
         this.email = userEmail;
         this.password = userPw;
-        this.name = userName;
+        this.profileImg = profileImg;
+        this.name = name;
         this.hashtag = hashtag;
         this.userinfo = userinfo;
     }

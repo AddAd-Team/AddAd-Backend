@@ -5,8 +5,6 @@ import addad.api.domain.payload.request.ModifyProfile;
 import addad.api.domain.payload.response.ADResponse;
 import addad.api.domain.payload.response.PostResponse;
 import addad.api.domain.payload.response.ProfileResponse;
-import org.springframework.web.multipart.MultipartFile;
-import software.amazon.ion.IonException;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,4 +16,5 @@ public interface MypageService {
     ProfileResponse ModifyProfile(ModifyProfile modifyProfile) throws IOException;
     PostResponse ModifyPost(ModifyPost modifyPost, Long postId) throws IOException;
     List<ADResponse> ADList();
+    List<ADListResponse> likeAd();
 }

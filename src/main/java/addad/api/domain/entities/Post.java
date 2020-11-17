@@ -7,14 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
 
     @Id
@@ -22,13 +20,13 @@ public class Post {
     private Long id;
 
     @Column
-    private Long userId;
+    private Long user_id;
 
     @Column
     private String hashtag;
 
     @Column
-    private String img;
+    private String post_img;
 
     @Column
     private String title;
@@ -48,18 +46,23 @@ public class Post {
     @Column
     private String createdAt;
 
-    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonIgnore
+    private User user;
+
+    @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL)
     private List<Likes> likes;
 
-    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
-    private List<Contact> contacts;
+    @OneToMany(mappedBy = "post_id", cascade = CascadeType.ALL)
+    private List<Application> applicaions;
 
     @Builder
     public Post(Long userId, String title, String hashtag, String img, String description, String price, String postTime, String deadline, String createdAt) {
-        this.userId = userId;
+        this.user_id = userId;
         this.title = title;
         this.hashtag = hashtag;
-        this.img = img;
+        this.post_img = img;
         this.description = description;
         this.price = price;
         this.postTime = postTime;

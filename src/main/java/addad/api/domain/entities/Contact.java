@@ -4,13 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
+@Setter
+@Entity
 @NoArgsConstructor
 public class Contact {
+  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +43,7 @@ public class Contact {
     private Post post;
 
     @Builder
-    public Contact(Long creator_id, Long advertiser_id, Long post_id) {
+    Contact(Long creator_id, Long advertiser_id, Long post_id) {
         this.creator_id = creator_id;
         this.advertiser_id = advertiser_id;
         this.post_id = post_id;

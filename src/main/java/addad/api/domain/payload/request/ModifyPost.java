@@ -1,13 +1,12 @@
 package addad.api.domain.payload.request;
 
+
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
-@Setter
+@Builder
 public class ModifyPost {
 
     private String title;
@@ -19,7 +18,7 @@ public class ModifyPost {
     private MultipartFile Image;
 
     private String price;
-
+  
     private String postTime;
 
     private String deadline;

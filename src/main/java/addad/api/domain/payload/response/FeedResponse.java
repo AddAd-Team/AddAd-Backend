@@ -1,5 +1,7 @@
 package addad.api.domain.payload.response;
 
+import addad.api.domain.entities.User;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -23,9 +25,9 @@ public class FeedResponse {
 
     private String postTime;
 
+    private String DateRemaining;
+
     private String hashtag;
 
-    private String createdAt;
-
-    private Boolean isLike;
+    private Boolean likes;
 }
