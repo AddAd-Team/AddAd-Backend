@@ -4,12 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor
 public class Contact {
@@ -18,14 +16,14 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column()
-    private Long post_id;
+    @Column(name = "post_id")
+    private Long postId;
 
-    @Column()
-    private Long creator_id;
+    @Column(name = "creator_id")
+    private Long creatorId;
 
-    @Column()
-    private Long advertiser_id;
+    @Column(name = "advertiser_id")
+    private Long advertiserId;
 
     @ManyToOne
     @JoinColumn(name="creator_id", insertable = false, updatable = false)
@@ -43,9 +41,9 @@ public class Contact {
     private Post post;
 
     @Builder
-    Contact(Long creator_id, Long advertiser_id, Long post_id) {
-        this.creator_id = creator_id;
-        this.advertiser_id = advertiser_id;
-        this.post_id = post_id;
+    public Contact(Long creatorId, Long advertiserId, Long postId) {
+        this.creatorId = creatorId;
+        this.advertiserId = advertiserId;
+        this.postId = postId;
     }
 }
