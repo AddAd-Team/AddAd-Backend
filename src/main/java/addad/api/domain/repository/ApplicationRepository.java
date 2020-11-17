@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
-    List<Application> findAllByUser_id(Long user_id);
+    List<Application> findAllByPost_id(Long post_id);
     Optional<Application> findByUser_idAndAndPost_id(Long user_id, Long post_id);
+    Application findByUser_idAndPost_id(Long user_id, Long post_id);
 }
