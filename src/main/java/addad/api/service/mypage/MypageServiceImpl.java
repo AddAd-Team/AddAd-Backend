@@ -2,11 +2,13 @@ package addad.api.service.mypage;
 
 import addad.api.config.security.AuthenticationFacade;
 import addad.api.domain.entities.Contact;
+import addad.api.domain.entities.Likes;
 import addad.api.domain.entities.Post;
 import addad.api.domain.entities.User;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyPost;
 import addad.api.domain.payload.request.ModifyProfile;
+import addad.api.domain.payload.response.ADListResponse;
 import addad.api.domain.payload.response.ADResponse;
 import addad.api.domain.payload.response.PostResponse;
 import addad.api.domain.payload.response.ProfileResponse;
@@ -103,8 +105,8 @@ public class MypageServiceImpl implements MypageService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
 
-        if (post.getImg() == null) {
-            s3Service.profileDelete(post.getImg());
+        if (post.getPost_img() == null) {
+            s3Service.profileDelete(post.getPost_img());
         }
 
         Post ChangedPost = post.ChangePost(s3Service.Upload(modifyPost.getImage(), "post_img/"), modifyPost);
@@ -113,7 +115,7 @@ public class MypageServiceImpl implements MypageService {
         return PostResponse.builder()
                 .title(ChangedPost.getTitle())
                 .hashtag(ChangedPost.getHashtag())
-                .image(ChangedPost.getImg())
+                .image(ChangedPost.getPost_img())
                 .description(ChangedPost.getDescription())
                 .price(ChangedPost.getPrice())
                 .postTime(ChangedPost.getPostTime())
@@ -128,7 +130,7 @@ public class MypageServiceImpl implements MypageService {
 
         List<ADResponse> responses = new ArrayList<>();
 
-        if(user.getUserinfo() == Userinfo.creator) {
+        if (user.getUserinfo() == Userinfo.creator) {
             List<Contact> contacts = contactRepository.findAllByCreator_id(user.getId());
 
             for (Contact contact : contacts) {
@@ -136,7 +138,7 @@ public class MypageServiceImpl implements MypageService {
                         ADResponse.builder()
                                 .postId(contact.getPost().getId())
                                 .title(contact.getPost().getTitle())
-                                .postImg(contact.getPost().getImg())
+                                .postImg(contact.getPost().getPost_img())
                                 .hashtag(contact.getPost().getHashtag())
                                 .postTime(contact.getPost().getPostTime())
                                 .build()
@@ -154,7 +156,7 @@ public class MypageServiceImpl implements MypageService {
                         ADResponse.builder()
                                 .postId(post.getId())
                                 .title(post.getTitle())
-                                .postImg(post.getImg())
+                                .postImg(post.getPost_img())
                                 .hashtag(post.getHashtag())
                                 .postTime(post.getPostTime())
                                 .build()
@@ -162,15 +164,17 @@ public class MypageServiceImpl implements MypageService {
             }
 
             return responses;
-          
-      }
+        }
+
+        return responses;
+    }
+
     public List<ADListResponse> likeAd() {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
         List<Likes> likes = likesRepository.findAllByUser_id(user.getId());
         List<ADListResponse> responses = new ArrayList<>();
-        ;
 
         for (Likes like : likes) {
             responses.add(
@@ -181,7 +185,6 @@ public class MypageServiceImpl implements MypageService {
                             .postTime(like.getPost().getPostTime())
                             .recruitmentClosing(PostServiceImpl.dateCalculation(like.getPost().getPostTime()))
                             .hashtag(like.getPost().getHashtag())
-                            .userinfo(like.getUser().getUserinfo())
                             .build()
             );
         }
