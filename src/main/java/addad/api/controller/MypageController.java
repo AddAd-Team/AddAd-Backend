@@ -1,6 +1,9 @@
 package addad.api.controller;
 
+import addad.api.domain.payload.request.ModifyPost;
 import addad.api.domain.payload.request.ModifyProfile;
+import addad.api.domain.payload.response.ADResponse;
+import addad.api.domain.payload.response.PostResponse;
 import addad.api.domain.payload.response.ProfileResponse;
 import addad.api.service.mypage.MypageService;
 import addad.api.utils.S3Service;
@@ -12,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/mypage")
@@ -38,5 +42,15 @@ public class MypageController {
     @PutMapping(value = "/modifyProfile")
     public ProfileResponse modifyProfile(ModifyProfile modifyProfile) throws IOException {
         return mypageService.ModifyProfile(modifyProfile);
+    }
+
+    @PutMapping(value = "/{postId}")
+    public PostResponse modifyPost(ModifyPost modifyPost, @PathVariable Long postId) throws IOException {
+        return mypageService.ModifyPost(modifyPost, postId);
+    }
+
+    @GetMapping(value = "/adlist")
+    public List<ADResponse> adResponse(){
+        return mypageService.ADList();
     }
 }
