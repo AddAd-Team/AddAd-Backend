@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ApplicationResponse {
-    private long id;
+    private long user_id;
 
     private String name;
 
