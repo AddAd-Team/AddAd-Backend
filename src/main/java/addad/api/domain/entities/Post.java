@@ -1,10 +1,8 @@
 package addad.api.domain.entities;
 
 import addad.api.domain.payload.request.ModifyPost;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -71,7 +69,7 @@ public class Post {
     }
 
     public Post ChangePost(String Image, ModifyPost modifyPost) {
-        this.img = Image;
+        this.post_img = Image;
         this.title = modifyPost.getTitle();
         this.description = modifyPost.getDescription();
         this.hashtag = modifyPost.getHashtag();
