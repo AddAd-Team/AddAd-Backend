@@ -22,8 +22,16 @@ public class DetailFeedResponse {
 
     private String deadline;
 
+    private String recruitmentClosing;
+
+    private String adClosing;
+
     private String hashtag;
 
     private String description;
+
+    private Boolean likes;
+
+    private Boolean application;
 
 }
