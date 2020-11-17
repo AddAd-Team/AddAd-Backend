@@ -37,4 +37,9 @@ public class UserController {
     public void signUp(@RequestBody @Valid SignUp signUp) {
         userService.signUp(signUp);
     }
+
+    @PostMapping("/test")
+    public void test() {
+        userService.test();
+    }
 }
