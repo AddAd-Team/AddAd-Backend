@@ -24,7 +24,7 @@ public class Post {
     private String hashtag;
 
     @Column
-    private String img;
+    private String post_img;
 
     @Column
     private String title;
@@ -57,11 +57,10 @@ public class Post {
 
     @Builder
     public Post(Long userId, String title, String hashtag, String img, String description, String price, String postTime, String deadline, String createdAt) {
-        this.userId = userId;
+        this.user_id = userId;
         this.title = title;
-        this.user_id = user_id;
         this.hashtag = hashtag;
-        this.img = img;
+        this.post_img = img;
         this.description = description;
         this.price = price;
         this.postTime = postTime;
