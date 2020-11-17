@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 public class Contact {
-
+  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

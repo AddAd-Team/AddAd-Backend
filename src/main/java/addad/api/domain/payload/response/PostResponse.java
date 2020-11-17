@@ -13,16 +13,16 @@ public class PostResponse {
 
     private String title;
 
-    private List<String> hashtag;
+    private String hashtag;
 
     private String description;
 
-    private List<String> image;
+    private String image;
 
     private String price;
 
-    private Integer postTime;
+    private String postTime;
 
-    private Integer deadline;
+    private String deadline;
 
 }

@@ -1,7 +1,10 @@
 package addad.api.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import addad.api.domain.payload.request.ModifyPost;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -65,5 +68,17 @@ public class Post {
         this.postTime = postTime;
         this.deadline = deadline;
         this.createdAt = createdAt;
+    }
+
+    public Post ChangePost(String Image, ModifyPost modifyPost) {
+        this.img = Image;
+        this.title = modifyPost.getTitle();
+        this.description = modifyPost.getDescription();
+        this.hashtag = modifyPost.getHashtag();
+        this.price = modifyPost.getPrice();
+        this.postTime = modifyPost.getPostTime();
+        this.deadline = modifyPost.getDeadline();
+
+        return this;
     }
 }

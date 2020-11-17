@@ -1,6 +1,9 @@
 package addad.api.controller;
 
+import addad.api.domain.payload.request.ModifyPost;
 import addad.api.domain.payload.request.ModifyProfile;
+import addad.api.domain.payload.response.ADResponse;
+import addad.api.domain.payload.response.PostResponse;
 import addad.api.domain.payload.response.ProfileResponse;
 import addad.api.service.mypage.MypageService;
 import addad.api.utils.S3Service;
@@ -38,6 +41,16 @@ public class MypageController {
         return mypageService.ModifyProfile(modifyProfile);
     }
 
+    @PutMapping(value = "/{postId}")
+    public PostResponse modifyPost(ModifyPost modifyPost, @PathVariable Long postId) throws IOException {
+        return mypageService.ModifyPost(modifyPost, postId);
+    }
+
+    @GetMapping(value = "/adlist")
+    public List<ADResponse> adResponse(){
+        return mypageService.ADList();
+    }
+  
     @GetMapping("/myAd")
     public List<ADListResponse> likeAd() {
         return mypageService.likeAd();

@@ -52,6 +52,12 @@ public class User {
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
     private List<Likes> likes;
 
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    private List<Contact> creator;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    private List<Contact> advertiser;
+
     @Builder
     public User(Long id, String userEmail, String userPw, String profileImg, String name, String hashtag, Userinfo userinfo) {
         this.id = id;
