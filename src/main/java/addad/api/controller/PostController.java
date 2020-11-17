@@ -31,15 +31,6 @@ public class PostController {
         return postService.getFeed(pageable);
     }
 
-    @PostMapping("/apply")
-    public void apply(@RequestParam("id") @Valid Long Id) {
-        postService.apply(Id);
-      
-    @GetMapping("/feed/{id}")
-    public DetailFeedResponse detailFeed(@PathVariable Long id){
-        return postService.getDetailFeed(id);
-    }
-
     @GetMapping("/feed/{postId}")
     public DetailFeedResponse getDetailFeed(@PathVariable Long postId) {
         return postService.getDetailFeed(postId);
