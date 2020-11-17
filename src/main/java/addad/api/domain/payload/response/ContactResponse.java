@@ -9,15 +9,15 @@ public class ContactResponse {
 
     private String title;
 
-    private Long userId;
+    private Long creatorId;
 
-    private String userName;
+    private String creatorName;
 
-    private String userProfile;
+    private String creatorProfileImage;
 
-    private Long advId;
+    private Long advertiserId;
 
-    private String advName;
+    private String advertiserName;
 
-    private String advProfile;
+    private String advertiserProfileImage;
 }
