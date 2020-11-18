@@ -52,7 +52,7 @@ public class MypageController {
         return mypageService.ADList();
     }
   
-    @GetMapping("/myAd")
+    @GetMapping("/likeAd")
     public List<ADListResponse> likeAd() {
         return mypageService.likeAd();
     }
