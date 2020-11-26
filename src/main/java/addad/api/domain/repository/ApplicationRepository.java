@@ -1,6 +1,7 @@
 package addad.api.domain.repository;
 
 import addad.api.domain.entities.Application;
+import addad.api.domain.entities.Contact;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +12,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     List<Application> findAllByPost_id(Long post_id);
     Optional<Application> findByUser_idAndAndPost_id(Long user_id, Long post_id);
     Application findByUser_idAndPost_id(Long user_id, Long post_id);
+    List<Contact> findAllByUser_id(Long user_id);
 }
