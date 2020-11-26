@@ -98,11 +98,14 @@ public class PostServiceImpl implements PostService {
     }
   
     public DetailFeedResponse getDetailFeed(Long id){
+        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
+                .orElseThrow(UserNotFoundException::new);
+
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFoundException::new);
 
-        Optional<Likes> likes = likesRepository.findByUser_idAndAndPost_id(post.getUser().getId(), post.getId());
-        Optional<Application> application = applicationRepository.findByUser_idAndAndPost_id(post.getUser().getId(), post.getId());
+        Optional<Likes> likes = likesRepository.findByUser_idAndAndPost_id(user.getId(), post.getId());
+        Optional<Application> application = applicationRepository.findByUser_idAndAndPost_id(user.getId(), id);
 
 
         return DetailFeedResponse.builder()
