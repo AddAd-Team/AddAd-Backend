@@ -12,10 +12,7 @@ import addad.api.domain.payload.response.ADListResponse;
 import addad.api.domain.payload.response.ADResponse;
 import addad.api.domain.payload.response.PostResponse;
 import addad.api.domain.payload.response.ProfileResponse;
-import addad.api.domain.repository.ContactRepository;
-import addad.api.domain.repository.PostRepository;
-import addad.api.domain.repository.LikesRepository;
-import addad.api.domain.repository.UserRepository;
+import addad.api.domain.repository.*;
 import addad.api.exception.IncorrectPasswordException;
 import addad.api.exception.PostNotFoundException;
 import addad.api.exception.UserNotFoundException;
@@ -36,6 +33,7 @@ public class MypageServiceImpl implements MypageService {
 
     private final AuthenticationFacade authenticationFacade;
     private final S3Service s3Service;
+    private final ApplicationRepository applicationRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -67,12 +65,28 @@ public class MypageServiceImpl implements MypageService {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
+        List<ADResponse> responses = new ArrayList<>();
+        List<Contact> contacts = contactRepository.findAllByCreator_id(user.getId());
+
+        for (Contact contact : contacts) {
+            responses.add(
+                    ADResponse.builder()
+                            .postId(contact.getPostId())
+                            .postImg(contact.getPost().getPost_img())
+                            .title(contact.getPost().getTitle())
+                            .hashtag(contact.getPost().getHashtag())
+                            .postTime(contact.getPost().getPostTime())
+                            .build()
+            );
+        }
+
         return ProfileResponse.builder()
                 .email(authenticationFacade.getUserEmail())
                 .name(user.getName())
                 .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                 .hashtag(user.getHashtag())
                 .description(user.getDescription())
+                .contactAd(responses)
                 .build();
     }
 
@@ -131,9 +145,9 @@ public class MypageServiceImpl implements MypageService {
         List<ADResponse> responses = new ArrayList<>();
 
         if (user.getUserinfo() == Userinfo.creator) {
-            List<Contact> contacts = contactRepository.findAllByCreator_id(user.getId());
+            List<Contact> contactApply = applicationRepository.findAllByUser_id(user.getId());
 
-            for (Contact contact : contacts) {
+            for (Contact contact : contactApply) {
                 responses.add(
                         ADResponse.builder()
                                 .postId(contact.getPost().getId())
