@@ -30,6 +30,7 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(UserNotFoundException::new);
 
         TokenResponse token = responseToken(user.getEmail());
+        token.setUserinfo(user.getUserinfo());
         userRepository.save(user.changeRefreshToken(token.getRefreshToken()));
 
         return token;
