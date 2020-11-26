@@ -1,11 +1,14 @@
 package addad.api.service.search;
 
+import addad.api.domain.entities.Contact;
 import addad.api.domain.entities.User;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.SearchName;
 import addad.api.domain.payload.request.SearchTag;
+import addad.api.domain.payload.response.ADResponse;
 import addad.api.domain.payload.response.ProfileResponse;
 import addad.api.domain.payload.response.SearchResponse;
+import addad.api.domain.repository.ContactRepository;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.UserNotFoundException;
 import addad.api.utils.DefaultImg;
@@ -24,6 +27,7 @@ public class SearchServiceImpl implements SearchService {
 
     private final UserRepository userRepository;
     private final DefaultImg defaultImg;
+    private final ContactRepository contactRepository;
 
 
     @Override
@@ -86,6 +90,22 @@ public class SearchServiceImpl implements SearchService {
         User user = userRepository.findById(Id)
                 .orElseThrow(UserNotFoundException::new);
 
+        List<ADResponse> AD = new ArrayList<>();
+
+        List<Contact> contacts = contactRepository.findAllByCreator_id(user.getId());
+
+        for (Contact contact : contacts) {
+            AD.add(
+                    ADResponse.builder()
+                            .postId(contact.getPost().getId())
+                            .title(contact.getPost().getTitle())
+                            .postImg(contact.getPost().getPost_img())
+                            .hashtag(contact.getPost().getHashtag())
+                            .postTime(contact.getPost().getPostTime())
+                            .build()
+            );
+        }
+
         return ProfileResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -93,8 +113,7 @@ public class SearchServiceImpl implements SearchService {
                 .description(user.getDescription())
                 .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                 .hashtag(user.getHashtag())
+                .contactAd(AD)
                 .build();
     }
-
-
 }
