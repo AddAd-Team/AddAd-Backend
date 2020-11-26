@@ -1,10 +1,7 @@
 package addad.api.service.mypage;
 
 import addad.api.config.security.AuthenticationFacade;
-import addad.api.domain.entities.Contact;
-import addad.api.domain.entities.Likes;
-import addad.api.domain.entities.Post;
-import addad.api.domain.entities.User;
+import addad.api.domain.entities.*;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyPost;
 import addad.api.domain.payload.request.ModifyProfile;
@@ -145,16 +142,16 @@ public class MypageServiceImpl implements MypageService {
         List<ADResponse> responses = new ArrayList<>();
 
         if (user.getUserinfo() == Userinfo.creator) {
-            List<Contact> contactApply = applicationRepository.findAllByUser_id(user.getId());
+            List<Application> contactApply = applicationRepository.findAllByUser_id(user.getId());
 
-            for (Contact contact : contactApply) {
+            for (Application contactapply : contactApply) {
                 responses.add(
                         ADResponse.builder()
-                                .postId(contact.getPost().getId())
-                                .title(contact.getPost().getTitle())
-                                .postImg(contact.getPost().getPost_img())
-                                .hashtag(contact.getPost().getHashtag())
-                                .postTime(contact.getPost().getPostTime())
+                                .postId(contactapply.getPost().getId())
+                                .title(contactapply.getPost().getTitle())
+                                .postImg(contactapply.getPost().getPost_img())
+                                .hashtag(contactapply.getPost().getHashtag())
+                                .postTime(contactapply.getPost().getPostTime())
                                 .build()
                 );
             }
