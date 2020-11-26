@@ -3,6 +3,8 @@ package addad.api.domain.payload.response;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @Builder
 public class ProfileResponse {
@@ -17,4 +19,6 @@ public class ProfileResponse {
     private String hashtag;
 
     private String profileImg;
+
+    private List<ADResponse> contactAd;
 }
