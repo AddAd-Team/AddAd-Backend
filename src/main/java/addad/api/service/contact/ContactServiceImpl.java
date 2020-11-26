@@ -27,14 +27,6 @@ public class ContactServiceImpl implements ContactService {
         Page<Contact> contacts = contactRepository.findAllBy(pageable);
         List<ContactResponse> contactResponses = new ArrayList<>();
         for (Contact contact : contacts) {
-            contactRepository.save(
-                    Contact.builder()
-                            .advertiserId(contact.getAdvertiser().getId())
-                            .creatorId(contact.getCreator().getId())
-                            .postId(contact.getPost().getId())
-                            .build()
-            );
-
             contactResponses.add(
                     ContactResponse.builder()
                             .title(contact.getPost().getTitle())
