@@ -31,7 +31,9 @@ public class AuthServiceImpl implements AuthService {
 
         TokenResponse token = responseToken(user.getEmail());
         token.setUserinfo(user.getUserinfo());
+
         userRepository.save(user.changeRefreshToken(token.getRefreshToken()));
+        userRepository.save(user.changeDeviceToken(signIn.getDeviceToken()));
 
         return token;
     }
