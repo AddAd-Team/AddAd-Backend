@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/test")
-    public void test() {
+    public void test() throws IOException {
         userService.test();
     }
 }
