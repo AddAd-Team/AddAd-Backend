@@ -1,20 +1,27 @@
 package addad.api.service.application;
 
-import addad.api.domain.entities.Application;
-import addad.api.domain.entities.Likes;
-import addad.api.domain.entities.User;
+import addad.api.domain.entities.*;
 import addad.api.domain.entities.enums.Userinfo;
+import addad.api.domain.payload.request.UserList;
 import addad.api.domain.payload.response.ApplicationResponse;
 import addad.api.domain.payload.response.SearchResponse;
 import addad.api.domain.repository.ApplicationRepository;
+import addad.api.domain.repository.ContactRepository;
+import addad.api.domain.repository.PostRepository;
 import addad.api.domain.repository.UserRepository;
+import addad.api.exception.PostNotFoundException;
 import addad.api.exception.UserNotFoundException;
 import addad.api.utils.DefaultImg;
+import addad.api.utils.FirebaseCloudMessageService;
+import com.google.firebase.internal.FirebaseRequestInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import addad.api.config.security.AuthenticationFacade;
+import software.amazon.ion.IonException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +32,10 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     private final UserRepository userRepository;
     private final ApplicationRepository applicationRepository;
+    private final ContactRepository contactRepository;
+    private final PostRepository postRepository;
     private final AuthenticationFacade authenticationFacade;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
     private final DefaultImg defaultImg;
 
     @Override
@@ -40,6 +50,7 @@ public class ApplicationServiceImpl implements ApplicationService{
                             .user_id(application.getUser_id())
                             .name(application.getUser().getName())
                             .profileImg(defaultImg.basic(application.getUser().getProfileImg()))
+                            .deviceToken(application.getUser().getDeviceToken())
                             .build()
             );
         }
@@ -57,11 +68,52 @@ public class ApplicationServiceImpl implements ApplicationService{
         if(!application.isPresent()) {
             applicationRepository.save(
                     Application.builder()
-                            .user_id(user.getId())
-                            .post_id(Id)
-                            .build()
+                        .user_id(user.getId())
+                        .post_id(Id)
+                        .build()
             );
         }
+    }
+
+    @Override
+    public void applicationAllow(List<UserList> userList, Long postId) throws IOException {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+
+        for (UserList user : userList) {
+            applicationRepository.deleteByUser_id(user.getId());
+
+            contactRepository.save(
+                    Contact.builder()
+                        .advertiserId(post.getUser_id())
+                        .creatorId(user.getId())
+                        .postId(postId)
+                        .build()
+            );
+
+            firebaseCloudMessageService.sendMessageTo(
+                    user.getDeviceToken(),
+                    "Addad 알림",
+                    post.getTitle() + "광고에 선정되셨습니다. 자세한 내용은 광고 페이지를 참고해주세요."
+            );
+        }
+
+        Uncontacted(postId);
+    }
+
+    @Async
+    public void Uncontacted(Long postId) throws IOException {
+        List<Application> applications = applicationRepository.findAllByPost_id(postId);
+
+        for (Application application : applications) {
+            firebaseCloudMessageService.sendMessageTo(
+                    application.getUser().getDeviceToken(),
+                    "Addad 알림",
+                    application.getPost().getTitle() + "광고에 선정되지 않았습니다. 다음 기회를 노려주세요."
+            );
+        }
+
+        applicationRepository.deleteAllByPost_id(postId);
     }
 
     @Override
