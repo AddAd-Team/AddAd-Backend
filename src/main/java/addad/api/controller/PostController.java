@@ -6,6 +6,7 @@ import addad.api.domain.payload.response.FeedResponse;
 import addad.api.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class PostController {
     }
 
     @GetMapping("/feed")
-    public List<FeedResponse> getFeed(@PageableDefault(sort = {"createdAt"}, size = 10) Pageable pageable) {
+    public List<FeedResponse> getFeed(@PageableDefault(direction = Sort.Direction.DESC, sort = "createdAt", size = 10) Pageable pageable) {
         return postService.getFeed(pageable);
     }
 
