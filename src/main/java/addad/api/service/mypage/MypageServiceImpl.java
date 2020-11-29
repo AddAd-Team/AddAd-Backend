@@ -92,17 +92,18 @@ public class MypageServiceImpl implements MypageService {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        if (user.getProfileImg() != null) {
-            s3Service.profileDelete(user.getProfileImg());
-        }
+        String changeImg;
+        if (!(modifyProfile.getImage().isEmpty())) {
+            changeImg = s3Service.Upload(modifyProfile.getImage(), "userImg/");
+        } else changeImg = user.getProfileImg();
 
-        User ChangedUser = user.ChangeProfile(s3Service.Upload(modifyProfile.getImage(), "userImg/"), modifyProfile);
+        User ChangedUser = user.ChangeProfile(changeImg, modifyProfile);
         userRepository.save(user);
 
         return ProfileResponse.builder()
                 .email(authenticationFacade.getUserEmail())
                 .name(ChangedUser.getName())
-                .profileImg(ChangedUser.getEmail())
+                .profileImg(ChangedUser.getProfileImg())
                 .hashtag(ChangedUser.getHashtag())
                 .description(ChangedUser.getDescription())
                 .build();
@@ -110,17 +111,15 @@ public class MypageServiceImpl implements MypageService {
 
     @Override
     public PostResponse ModifyPost(ModifyPost modifyPost, Long postId) throws IOException{
-        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
-                .orElseThrow(UserNotFoundException::new);
-
         Post post = postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
 
-        if (post.getPost_img() == null) {
-            s3Service.profileDelete(post.getPost_img());
-        }
+        String changeImg;
+        if (!(modifyPost.getImage().isEmpty())) {
+            changeImg = s3Service.Upload(modifyPost.getImage(), "post_img/");
+        } else changeImg = post.getUser().getProfileImg();
 
-        Post ChangedPost = post.ChangePost(s3Service.Upload(modifyPost.getImage(), "post_img/"), modifyPost);
+        Post ChangedPost = post.ChangePost(changeImg, modifyPost);
         postRepository.save(post);
 
         return PostResponse.builder()
