@@ -128,14 +128,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deleteFeed(Long postId){
-        User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
+        userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        Post post = postRepository.findById(postId)
-                .orElseThrow(PostNotFoundException::new);
-
         postRepository.deleteById(postId);
-
     }
 
     public String dateCalculation(String strStartDate) {
