@@ -13,4 +13,6 @@ public class SignIn {
     private String email;
 
     private String password;
+
+    private String deviceToken;
 }
