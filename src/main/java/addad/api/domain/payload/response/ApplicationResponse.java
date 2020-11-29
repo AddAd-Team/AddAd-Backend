@@ -11,4 +11,6 @@ public class ApplicationResponse {
     private String name;
 
     private String profileImg;
+
+    private String deviceToken;
 }
