@@ -42,6 +42,9 @@ public class User {
     private String refreshToken;
 
     @Column()
+    private String deviceToken;
+
+    @Column()
     @Enumerated(EnumType.STRING)
     private Userinfo userinfo;
 
@@ -65,6 +68,12 @@ public class User {
 
     public User changeRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+
+        return this;
+    }
+
+    public User changeDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
 
         return this;
     }
