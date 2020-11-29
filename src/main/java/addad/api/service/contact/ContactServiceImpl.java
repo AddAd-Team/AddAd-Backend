@@ -9,6 +9,7 @@ import addad.api.domain.repository.PostRepository;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.PostNotFoundException;
 import addad.api.exception.UserNotFoundException;
+import addad.api.utils.DefaultImg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ContactServiceImpl implements ContactService {
     private final ContactRepository contactRepository;
+    private final DefaultImg defaultImg;
 
     @Override
     public List<ContactResponse> getContact(Pageable pageable) {
@@ -32,7 +34,7 @@ public class ContactServiceImpl implements ContactService {
                             .title(contact.getPost().getTitle())
                             .advertiserId(contact.getAdvertiser().getId())
                             .advertiserName(contact.getAdvertiser().getName())
-                            .advertiserProfileImage(contact.getAdvertiser().getProfileImg())
+                            .advertiserProfileImage(defaultImg.basic(contact.getAdvertiser().getProfileImg()))
                             .creatorId(contact.getCreator().getId())
                             .creatorName(contact.getCreator().getName())
                             .creatorProfileImage(contact.getCreator().getProfileImg())
