@@ -40,7 +40,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(defaultImg.basic(user.getProfileImg()))
+                            .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                             .hashtag(user.getHashtag())
                             .build()
             );
@@ -58,7 +58,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(defaultImg.basic(user.getProfileImg()))
+                            .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                             .hashtag(user.getHashtag())
                             .build()
             );
@@ -76,7 +76,7 @@ public class SearchServiceImpl implements SearchService {
                     SearchResponse.builder()
                             .id(user.getId())
                             .name(user.getName())
-                            .profileImg(defaultImg.basic(user.getProfileImg()))
+                            .profileImg(defaultImg.userinfo(user.getProfileImg(), user.getUserinfo()))
                             .hashtag(user.getHashtag())
                             .build()
             );
