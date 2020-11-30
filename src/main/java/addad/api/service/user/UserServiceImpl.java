@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void test() throws IOException {
-        firebaseCloudMessageService.sendMessageTo("cjm2AYIUTfijnbbYPbu8uL:APA91bFNx0C8nxdNgXYyzNdPozr_jGhsqalkLB4ZIXl_8_-u-u2HNUj0RJIuw9dXOuMqSQiKDORg8WdZqbP7ObSjd0zmSyYxQmgjs6_fe4qnURFAXznjCv6lHguQvrwUFEYNCkXT1tCP",
+        firebaseCloudMessageService.sendMessageTo("ccxgY2bHTVibR2icqakNU_:APA91bHXo3tZiZU_QG6GUTU-V5jrVZ_8_0SYjzYQV9t3l5wLVnJ77yEZ84hFX25GiYgGydlR_jM60Tvh-2P8G-2k9ZRi1QWZYFI6_Bly54ZTM0Qpr9frWWXoNNNBrSGmxVkgaZ4LTjIm",
                 "윤석준 병신", "ㄹㅇㅋㅋ");
     }
 }
