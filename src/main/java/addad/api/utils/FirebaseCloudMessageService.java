@@ -1,6 +1,8 @@
 package addad.api.utils;
 
+import addad.api.domain.entities.Notification;
 import addad.api.domain.payload.request.FcmMessage;
+import addad.api.domain.repository.NotificationRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
