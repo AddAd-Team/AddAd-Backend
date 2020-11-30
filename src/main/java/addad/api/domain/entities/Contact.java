@@ -16,34 +16,51 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private String title;
+
+    @Column
+    private String postImg;
+
+    @Column
+    private String hashtag;
+
+    @Column
+    private String postTime;
+
     @Column(name = "post_id")
     private Long postId;
 
     @Column(name = "creator_id")
     private Long creatorId;
 
+    @Column(name = "creator_name")
+    private String creatorName;
+
+    @Column(name = "creator_profile_image")
+    private String creatorProfileImage;
+
     @Column(name = "advertiser_id")
     private Long advertiserId;
 
-    @ManyToOne
-    @JoinColumn(name="creator_id", insertable = false, updatable = false)
-    @JsonIgnore
-    private User creator;
+    @Column(name = "advertiser_name")
+    private String advertiserName;
 
-    @ManyToOne
-    @JoinColumn(name="advertiser_id", insertable = false, updatable = false)
-    @JsonIgnore
-    private User advertiser;
-
-    @ManyToOne
-    @JoinColumn(name="post_id", insertable = false, updatable = false)
-    @JsonIgnore
-    private Post post;
+    @Column(name = "advertiser_profile_image")
+    private String advertiserProfileImage;
 
     @Builder
-    public Contact(Long creatorId, Long advertiserId, Long postId) {
+    public Contact(String title, String postImg, String hashtag, String postTime, Long creatorId, String creatorName, String creatorProfileImage, Long advertiserId, String advertiserName, String advertiserProfileImage, Long postId) {
+        this.title = title;
+        this.postImg = postImg;
+        this.hashtag = hashtag;
+        this.postTime = postTime;
         this.creatorId = creatorId;
+        this.creatorName = creatorName;
+        this.creatorProfileImage = creatorProfileImage;
         this.advertiserId = advertiserId;
+        this.advertiserName = advertiserName;
+        this.advertiserProfileImage = advertiserProfileImage;
         this.postId = postId;
     }
 }
