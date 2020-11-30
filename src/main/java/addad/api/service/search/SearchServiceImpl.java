@@ -92,16 +92,16 @@ public class SearchServiceImpl implements SearchService {
 
         List<ADResponse> AD = new ArrayList<>();
 
-        List<Contact> contacts = contactRepository.findAllByCreator_id(user.getId());
+        List<Contact> contacts = contactRepository.findAllByCreatorId(user.getId());
 
         for (Contact contact : contacts) {
             AD.add(
                     ADResponse.builder()
-                            .postId(contact.getPost().getId())
-                            .title(contact.getPost().getTitle())
-                            .postImg(contact.getPost().getPost_img())
-                            .hashtag(contact.getPost().getHashtag())
-                            .postTime(contact.getPost().getPostTime())
+                            .postId(contact.getPostId())
+                            .title(contact.getTitle())
+                            .postImg(contact.getPostImg())
+                            .hashtag(contact.getHashtag())
+                            .postTime(contact.getPostTime())
                             .build()
             );
         }
