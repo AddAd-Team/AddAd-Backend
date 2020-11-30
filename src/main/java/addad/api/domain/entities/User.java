@@ -4,6 +4,7 @@ import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyProfile;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -13,7 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id
     @Column()
@@ -51,9 +53,6 @@ public class User {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
-
-    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
-    private List<Likes> likes;
 
     @Builder
     public User(Long id, String userEmail, String userPw, String profileImg, String name, String hashtag, Userinfo userinfo) {
