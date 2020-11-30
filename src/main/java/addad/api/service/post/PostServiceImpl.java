@@ -5,6 +5,7 @@ import addad.api.domain.entities.Application;
 import addad.api.domain.entities.Likes;
 import addad.api.domain.entities.Post;
 import addad.api.domain.entities.User;
+import addad.api.domain.entities.enums.PostStatus;
 import addad.api.domain.payload.request.PostRequest;
 import addad.api.domain.payload.response.DetailFeedResponse;
 import addad.api.domain.payload.response.FeedResponse;
@@ -62,6 +63,7 @@ public class PostServiceImpl implements PostService {
                         .price(postRequest.getPrice())
                         .postTime(postRequest.getPostTime())
                         .deadline(postRequest.getDeadline())
+                        .postStatus(PostStatus.ongoing)
                         .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                         .build()
         );
@@ -72,7 +74,7 @@ public class PostServiceImpl implements PostService {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        Page<Post> posts = postRepository.findAllBy(pageable);
+        Page<Post> posts = postRepository.findAllByPostStatus(pageable, PostStatus.ongoing);
         List<FeedResponse> feedResponses = new ArrayList<>();
         for (Post post : posts) {
 
@@ -82,7 +84,7 @@ public class PostServiceImpl implements PostService {
                     FeedResponse.builder()
                             .userId(post.getUser().getId())
                             .postId(post.getId())
-                            .profileImg(defaultImg.basic(post.getUser().getProfileImg()))
+                            .profileImg(defaultImg.userinfo(post.getUser().getProfileImg(), post.getUser().getUserinfo()))
                             .title(post.getTitle())
                             .postImg(post.getPost_img())
                             .price(post.getPrice())
