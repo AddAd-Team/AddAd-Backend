@@ -24,6 +24,7 @@ public class FirebaseCloudMessageService {
         String message = makeMessage(targetToken, title, body);
 
         OkHttpClient client = new OkHttpClient();
+
         RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
         Request request = new Request.Builder()
                 .url(API_URL)
@@ -35,7 +36,6 @@ public class FirebaseCloudMessageService {
         client.newCall(request).execute();
     }
 
-    @Async
     private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
@@ -43,18 +43,15 @@ public class FirebaseCloudMessageService {
                         .notification(FcmMessage.Notification.builder()
                                 .title(title)
                                 .body(body)
-                                .image(null)
                                 .build()
                         )
                         .build()
                 )
-                .validate_only(false)
                 .build();
 
         return objectMapper.writeValueAsString(fcmMessage);
     }
 
-    @Async
     private String getAccessToken() throws IOException {
         String firebaseConfigPath = "firebase/firebase_service_key.json";
 
@@ -67,21 +64,3 @@ public class FirebaseCloudMessageService {
         return googleCredentials.getAccessToken().getTokenValue();
     }
 }
-
-//    private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
-//        FcmMessage fcmMessage = FcmMessage.builder()
-//                .message(FcmMessage.Message.builder()
-//                        .token(targetToken)
-//                        .notification(FcmMessage.Notification.builder()
-//                                .title(title)
-//                                .body(body)
-//                                .image(null)
-//                                .build()
-//                        )
-//                        .build()
-//                )
-//                .validate_only(false)
-//                .build();
-//
-//        return objectMapper.writeValueAsString(fcmMessage);
-//    }
