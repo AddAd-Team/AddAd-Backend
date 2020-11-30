@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface ContactRepository extends JpaRepository<Contact, Long> {
     Page<Contact> findAllBy(Pageable pageable);
-    List<Contact> findAllByCreator_id(Long userId);
+    List<Contact> findAllByCreatorId(Long userId);
 }
