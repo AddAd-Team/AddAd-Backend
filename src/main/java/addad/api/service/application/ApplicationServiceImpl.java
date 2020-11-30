@@ -1,6 +1,7 @@
 package addad.api.service.application;
 
 import addad.api.domain.entities.*;
+import addad.api.domain.entities.enums.PostStatus;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.UserList;
 import addad.api.domain.payload.response.ApplicationResponse;
@@ -49,7 +50,7 @@ public class ApplicationServiceImpl implements ApplicationService{
                     ApplicationResponse.builder()
                             .user_id(application.getUser_id())
                             .name(application.getUser().getName())
-                            .profileImg(defaultImg.basic(application.getUser().getProfileImg()))
+                            .profileImg(defaultImg.userinfo(application.getUser().getProfileImg(), application.getUser().getUserinfo()))
                             .deviceToken(application.getUser().getDeviceToken())
                             .build()
             );
@@ -98,11 +99,12 @@ public class ApplicationServiceImpl implements ApplicationService{
             );
         }
 
-        Uncontacted(postId);
+        Uncontacted(postId, post);
     }
 
     @Async
-    public void Uncontacted(Long postId) throws IOException {
+    public void Uncontacted(Long postId, Post post) throws IOException {
+
         List<Application> applications = applicationRepository.findAllByPost_id(postId);
 
         for (Application application : applications) {
@@ -114,6 +116,8 @@ public class ApplicationServiceImpl implements ApplicationService{
         }
 
         applicationRepository.deleteAllByPost_id(postId);
+
+        postRepository.save(post.ChangePostStatus(PostStatus.completion));
     }
 
     @Override
