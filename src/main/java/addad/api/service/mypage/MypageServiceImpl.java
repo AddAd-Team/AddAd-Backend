@@ -64,16 +64,16 @@ public class MypageServiceImpl implements MypageService {
                 .orElseThrow(UserNotFoundException::new);
 
         List<ADResponse> responses = new ArrayList<>();
-        List<Contact> contacts = contactRepository.findAllByCreator_id(user.getId());
+        List<Contact> contacts = contactRepository.findAllByCreatorId(user.getId());
 
         for (Contact contact : contacts) {
             responses.add(
                     ADResponse.builder()
                             .postId(contact.getPostId())
-                            .postImg(contact.getPost().getPost_img())
-                            .title(contact.getPost().getTitle())
-                            .hashtag(contact.getPost().getHashtag())
-                            .postTime(contact.getPost().getPostTime())
+                            .postImg(contact.getPostImg())
+                            .title(contact.getTitle())
+                            .hashtag(contact.getHashtag())
+                            .postTime(contact.getPostTime())
                             .build()
             );
         }
