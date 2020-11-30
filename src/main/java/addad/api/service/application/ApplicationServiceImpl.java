@@ -6,12 +6,10 @@ import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.UserList;
 import addad.api.domain.payload.response.ApplicationResponse;
 import addad.api.domain.payload.response.SearchResponse;
-import addad.api.domain.repository.ApplicationRepository;
-import addad.api.domain.repository.ContactRepository;
-import addad.api.domain.repository.PostRepository;
-import addad.api.domain.repository.UserRepository;
+import addad.api.domain.repository.*;
 import addad.api.exception.PostNotFoundException;
 import addad.api.exception.UserNotFoundException;
+import addad.api.utils.AsyncFunc;
 import addad.api.utils.DefaultImg;
 import addad.api.utils.FirebaseCloudMessageService;
 import com.google.firebase.internal.FirebaseRequestInitializer;
@@ -37,6 +35,7 @@ public class ApplicationServiceImpl implements ApplicationService{
     private final PostRepository postRepository;
     private final AuthenticationFacade authenticationFacade;
     private final FirebaseCloudMessageService firebaseCloudMessageService;
+    private final AsyncFunc asyncFunc;
     private final DefaultImg defaultImg;
 
     @Override
@@ -84,13 +83,8 @@ public class ApplicationServiceImpl implements ApplicationService{
         for (UserList user : userList) {
             applicationRepository.deleteByUser_id(user.getId());
 
-            contactRepository.save(
-                    Contact.builder()
-                        .advertiserId(post.getUser_id())
-                        .creatorId(user.getId())
-                        .postId(postId)
-                        .build()
-            );
+            asyncFunc.contactSave(user.getId(), post, postId);
+            asyncFunc.notificationLog(user.getId(), post);
 
             firebaseCloudMessageService.sendMessageTo(
                     user.getDeviceToken(),
@@ -108,6 +102,7 @@ public class ApplicationServiceImpl implements ApplicationService{
         List<Application> applications = applicationRepository.findAllByPost_id(postId);
 
         for (Application application : applications) {
+            asyncFunc.notificationLog(application.getUser_id(), post);
             firebaseCloudMessageService.sendMessageTo(
                     application.getUser().getDeviceToken(),
                     "Addad 알림",
