@@ -2,6 +2,7 @@ package addad.api.service.mypage;
 
 import addad.api.config.security.AuthenticationFacade;
 import addad.api.domain.entities.*;
+import addad.api.domain.entities.enums.PostStatus;
 import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyPost;
 import addad.api.domain.payload.request.ModifyProfile;
@@ -159,7 +160,7 @@ public class MypageServiceImpl implements MypageService {
         }
 
         if (user.getUserinfo() == Userinfo.advertiser) {
-            List<Post> posts = postRepository.findByUserId(user.getId());
+            List<Post> posts = postRepository.findByUserIdAndPostStatusOrPostStatus(user.getId(), PostStatus.ongoing, PostStatus.beforeSelection);
 
             for (Post post : posts) {
                 responses.add(
