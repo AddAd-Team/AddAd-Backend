@@ -7,10 +7,16 @@ import addad.api.domain.payload.response.TokenResponse;
 import addad.api.domain.repository.UserRepository;
 import addad.api.exception.InvalidTokenException;
 import addad.api.exception.UserNotFoundException;
+import addad.api.utils.AsyncFunc;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final AsyncFunc asyncFunc;
 
     @Value("${auth.jwt.prefix}")
     private String prefix;
@@ -32,8 +39,7 @@ public class AuthServiceImpl implements AuthService {
         TokenResponse token = responseToken(user.getEmail());
         token.setUserinfo(user.getUserinfo());
 
-        userRepository.save(user.changeRefreshToken(token.getRefreshToken()));
-        userRepository.save(user.changeDeviceToken(signIn.getDeviceToken()));
+        asyncFunc.saveDeviceToken(user, signIn.getDeviceToken());
 
         return token;
     }
