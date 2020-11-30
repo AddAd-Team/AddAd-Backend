@@ -34,7 +34,7 @@ public class ContactServiceImpl implements ContactService {
                             .title(contact.getPost().getTitle())
                             .advertiserId(contact.getAdvertiser().getId())
                             .advertiserName(contact.getAdvertiser().getName())
-                            .advertiserProfileImage(defaultImg.basic(contact.getAdvertiser().getProfileImg()))
+                            .advertiserProfileImage(defaultImg.userinfo(contact.getAdvertiser().getProfileImg(), contact.getAdvertiser().getUserinfo()))
                             .creatorId(contact.getCreator().getId())
                             .creatorName(contact.getCreator().getName())
                             .creatorProfileImage(contact.getCreator().getProfileImg())
