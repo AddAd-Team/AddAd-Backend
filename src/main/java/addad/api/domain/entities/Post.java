@@ -1,5 +1,7 @@
 package addad.api.domain.entities;
 
+import addad.api.domain.entities.enums.PostStatus;
+import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.request.ModifyPost;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -41,6 +43,10 @@ public class Post {
     @Column
     private String deadline;
 
+    @Column()
+    @Enumerated(EnumType.STRING)
+    private PostStatus postStatus;
+
     @Column
     private String createdAt;
 
@@ -56,7 +62,7 @@ public class Post {
     private List<Application> applicaions;
 
     @Builder
-    public Post(Long userId, String title, String hashtag, String img, String description, String price, String postTime, String deadline, String createdAt) {
+    public Post(Long userId, String title, String hashtag, String img, String description, String price, String postTime, String deadline , PostStatus postStatus, String createdAt) {
         this.user_id = userId;
         this.title = title;
         this.hashtag = hashtag;
@@ -65,6 +71,7 @@ public class Post {
         this.price = price;
         this.postTime = postTime;
         this.deadline = deadline;
+        this.postStatus = postStatus;
         this.createdAt = createdAt;
     }
 
@@ -76,6 +83,12 @@ public class Post {
         this.price = modifyPost.getPrice();
         this.postTime = modifyPost.getPostTime();
         this.deadline = modifyPost.getDeadline();
+
+        return this;
+    }
+
+    public Post ChangePostStatus(PostStatus postStatus) {
+        this.postStatus = postStatus;
 
         return this;
     }
