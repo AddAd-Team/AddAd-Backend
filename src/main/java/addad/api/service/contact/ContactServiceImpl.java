@@ -3,6 +3,7 @@ package addad.api.service.contact;
 import addad.api.domain.entities.Contact;
 import addad.api.domain.entities.Post;
 import addad.api.domain.entities.User;
+import addad.api.domain.entities.enums.Userinfo;
 import addad.api.domain.payload.response.ContactResponse;
 import addad.api.domain.repository.ContactRepository;
 import addad.api.domain.repository.PostRepository;
@@ -31,13 +32,13 @@ public class ContactServiceImpl implements ContactService {
         for (Contact contact : contacts) {
             contactResponses.add(
                     ContactResponse.builder()
-                            .title(contact.getPost().getTitle())
-                            .advertiserId(contact.getAdvertiser().getId())
-                            .advertiserName(contact.getAdvertiser().getName())
-                            .advertiserProfileImage(defaultImg.userinfo(contact.getAdvertiser().getProfileImg(), contact.getAdvertiser().getUserinfo()))
-                            .creatorId(contact.getCreator().getId())
-                            .creatorName(contact.getCreator().getName())
-                            .creatorProfileImage(contact.getCreator().getProfileImg())
+                            .title(contact.getTitle())
+                            .advertiserId(contact.getAdvertiserId())
+                            .advertiserName(contact.getCreatorName())
+                            .advertiserProfileImage(defaultImg.userinfo(contact.getAdvertiserProfileImage(), Userinfo.advertiser))
+                            .creatorId(contact.getCreatorId())
+                            .creatorName(contact.getCreatorName())
+                            .creatorProfileImage(defaultImg.userinfo(contact.getCreatorProfileImage(), Userinfo.creator))
                             .build()
             );
         }
