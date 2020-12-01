@@ -14,4 +14,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findAllByPostStatus(Pageable pageable, PostStatus postStatus);
     Optional<Post> findById(Long id);
     List<Post> findByUserIdAndPostStatusOrPostStatus(Long userId, PostStatus firstStatus, PostStatus secondStatus);
+    List<Post> findAllByPostTime(String postTime);
 }
