@@ -24,12 +24,16 @@ public class Notification {
     private String profileImg;
 
     @Column
+    private String title;
+
+    @Column
     private String description;
 
     @Builder
-    public Notification(Long userId, String profileImg, String description) {
+    public Notification(Long userId, String profileImg, String title, String description) {
         this.userId = userId;
         this.profileImg = profileImg;
+        this.title = title;
         this.description = description;
     }
 }
