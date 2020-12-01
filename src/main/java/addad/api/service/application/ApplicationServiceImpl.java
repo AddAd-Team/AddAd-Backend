@@ -84,7 +84,7 @@ public class ApplicationServiceImpl implements ApplicationService{
             applicationRepository.deleteByUser_id(user.getId());
 
             asyncFunc.contactSave(user.getId(), post, postId);
-            asyncFunc.notificationLog(user.getId(), post);
+            asyncFunc.notificationLog(user.getId(), post, "광고에 선정되셨습니다. 자세한 내용은 광고 페이지를 참고해주세요.");
 
             firebaseCloudMessageService.sendMessageTo(
                     user.getDeviceToken(),
@@ -102,7 +102,7 @@ public class ApplicationServiceImpl implements ApplicationService{
         List<Application> applications = applicationRepository.findAllByPost_id(postId);
 
         for (Application application : applications) {
-            asyncFunc.notificationLog(application.getUser_id(), post);
+            asyncFunc.notificationLog(application.getUser_id(), post, "광고에 선정되지 않았습니다. 다음 기회를 노려주세요.");
             firebaseCloudMessageService.sendMessageTo(
                     application.getUser().getDeviceToken(),
                     "Addad 알림",
