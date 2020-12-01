@@ -29,12 +29,13 @@ public class AsyncFunc {
     }
 
     @Async
-    public void notificationLog(Long userId, Post post) {
+    public void notificationLog(Long userId, Post post, String description) {
         notificationRepository.save(
                 Notification.builder()
                         .userId(userId)
                         .profileImg(post.getUser().getProfileImg())
-                        .description(post.getDescription())
+                        .title(post.getTitle())
+                        .description(description)
                         .build()
         );
     }
