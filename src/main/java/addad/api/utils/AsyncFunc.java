@@ -56,7 +56,7 @@ public class AsyncFunc {
                         .advertiserProfileImage(post.getUser().getProfileImg())
                         .creatorId(user.getId())
                         .creatorName(user.getName())
-                        .creatorProfileImage(user.getName())
+                        .creatorProfileImage(user.getProfileImg())
                         .postId(postId)
                         .build()
             );
