@@ -40,7 +40,7 @@ public class PostCheck implements CommandLineRunner {
     }
 
     public void check() throws Exception {
-        List<Post> posts = postRepository.findAllByPostTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        List<Post> posts = postRepository.findAllByPostTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
 
         for (Post post : posts) {
             postRepository.save(
