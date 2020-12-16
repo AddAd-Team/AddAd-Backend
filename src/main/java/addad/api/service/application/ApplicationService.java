@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ApplicationService {
     List<ApplicationResponse> application(Long post_id);
-    void apply(Long Id);
+    void apply(Long Id) throws IOException;
     void applicationAllow(List<UserList> userList, Long postId) throws IOException;
-    void applicationDelete(Long postId);
+    void applicationDelete(Long postId) throws IOException;
 }
