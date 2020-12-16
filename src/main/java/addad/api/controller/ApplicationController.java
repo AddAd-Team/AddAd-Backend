@@ -22,7 +22,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/apply/{postId}")
-    public void apply(@PathVariable Long postId) {
+    public void apply(@PathVariable Long postId) throws IOException {
         applicationService.apply(postId);
     }
 
@@ -32,7 +32,7 @@ public class ApplicationController {
     }
 
     @DeleteMapping("/apply/{postId}")
-    public void applicationDelete(@PathVariable Long postId) {
+    public void applicationDelete(@PathVariable Long postId) throws IOException {
         applicationService.applicationDelete(postId);
     }
 }
