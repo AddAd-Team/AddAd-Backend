@@ -59,11 +59,21 @@ public class ApplicationServiceImpl implements ApplicationService{
     }
 
     @Override
-    public void apply(Long Id) {
+    public void apply(Long Id) throws IOException {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
+        Post post = postRepository.findById(Id)
+                .orElseThrow(PostNotFoundException::new);
+
         Optional<Application> application = applicationRepository.findByUser_idAndAndPost_id(user.getId(), Id);
+
+        firebaseCloudMessageService.sendMessageTo(
+                post.getUser().getDeviceToken(),
+                "Addad 알림",
+                user.getName() + "님이 " + post.getTitle() + " 광고에 신청하였습니다. 자세한 내용은 신청자 페이지를 참고해주세요."
+        );
+        asyncFunc.notificationLog(post.getUser().getId(), post,user.getName() + "님이 " + post.getTitle(), " 광고에 신청하였습니다. 자세한 내용은 신청자 페이지를 참고해주세요.");
 
         if(!application.isPresent()) {
             applicationRepository.save(
@@ -116,11 +126,21 @@ public class ApplicationServiceImpl implements ApplicationService{
     }
 
     @Override
-    public void applicationDelete(Long postId){
+    public void applicationDelete(Long postId) throws IOException {
         User user = userRepository.findByEmail(authenticationFacade.getUserEmail())
                 .orElseThrow(UserNotFoundException::new);
 
+        Post post = postRepository.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+
         Application application = applicationRepository.findByUser_idAndPost_id(user.getId(), postId);
+
+        firebaseCloudMessageService.sendMessageTo(
+                post.getUser().getDeviceToken(),
+                "Addad 알림",
+                user.getName() + "님이 " + post.getTitle() + " 광고에 신청을 취소하였습니다. 자세한 내용은 신청자 페이지를 참고해주세요."
+        );
+        asyncFunc.notificationLog(post.getUser().getId(), post,user.getName() + "님이 " + post.getTitle(), " 광고에 신청을 취소하였습니다. 자세한 내용은 신청자 페이지를 참고해주세요.");
 
         applicationRepository.delete(application);
     }
