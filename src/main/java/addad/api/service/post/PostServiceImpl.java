@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService {
                         .postTime(postRequest.getPostTime())
                         .deadline(postRequest.getDeadline())
                         .postStatus(PostStatus.ongoing)
-                        .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                        .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                         .build()
         );
     }
